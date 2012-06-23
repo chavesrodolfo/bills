@@ -1,0 +1,79 @@
+<mockup version="1.0" skin="sketch" measuredW="995" measuredH="605" mockupW="995" mockupH="605">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="0" y="0" w="995" h="605" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Bills%0Ahttp%3A//www.bills.com</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Accordion" x="789" y="121" w="184" h="154" measuredW="184" measuredH="234" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>0</selectedIndex>
+        <text>Balan%E7o%20Por%20Pessoa%0A-%20fulano%20%3C-%20Ciclano%20%20%20R%24%2030%2C00%0A-%20Jo%E3o%20%3C-%20Maria%20%20%20%20%20%20R%24%2010%2C00%0A-%20Maria%20%3C-%20Pedro%20%20%20%20%20R%24%2010%2C00</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::Accordion" x="789" y="275" w="184" h="138" measuredW="184" measuredH="195" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Balan%E7o%20Geral%0A-%20fulano%20%3C-%20Ciclano%20%20%20R%24%2030%2C00%0A-%20Jo%E3o%20%3C-%20Pedro%20%20%20%20%20R%24%2010%2C00</text>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::DataGrid" x="15" y="121" w="758" h="292" measuredW="456" measuredH="200" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <hLines>false</hLines>
+        <rowHeight>35</rowHeight>
+        <selectedIndex>4</selectedIndex>
+        <text>Benefici%E1rio%5Cr%20%5Ev%2C%20Valor%20%5Ev%2C%20Devedor%20%5Ev%2C%20Motivo%20%5Ev%2C%20Data%20%5Ev%2C%20Editar%0AFulano%5Cr%2C%20R%24%2030%5C%2C00%2C%20Ciclano%2C%20Mercado%2C%2001/06/2012%2C%20../%0AJo%E3o%5Cr%2C%20R%24%205%5C%2C00%2C%20Maria%2C%20Almo%E7o%2C%2006/06/2012%2C%20../%0AJo%E3o%5Cr%2C%20R%24%205%5C%2C00%2C%20Maria%2C%20Almo%E7o%2C%2007/06/2012%2C%20../%0AMaria%5Cr%2C%20R%24%2010%5C%2C00%2C%20Pedro%2C%20Almo%E7o%2C%2008/06/2012%2C%20../%0A%2CR%24%200%5C%2C00%2C%2Ceditando..%7C%2C%2C%20../%0A%7B20L%2C%2015L%2C%2020L%2C%2020L%2C%2020C%2C%200C%7D</text>
+        <verticalScrollbar>false</verticalScrollbar>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::SubTitle" x="15" y="85" w="-1" h="-1" measuredW="45" measuredH="33" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Bills</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::LinkBar" x="388" y="91" w="-1" h="-1" measuredW="379" measuredH="21" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Home%2C%20Bills%2C%20Hist%F3rico%2C%20Relat%F3rio%2C%20Configura%E7%F5es%2C%20Sair</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Paragraph" x="270" y="552" w="432" h="23" measuredW="200" measuredH="80" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <align>center</align>
+        <text>*Bills*%20-%20Mantenha%20sua%20vida%20financeira%20organizada.%20%7C%20%5BFAQ%5D%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::SearchBox" x="797" y="83" w="168" h="-1" measuredW="120" measuredH="25" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>buscar%20bills</text>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::ColumnChart" x="789" y="420" w="186" h="125" measuredW="187" measuredH="175" zOrder="8" locked="false" isInGroup="-1"/>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::DateChooser" x="582" y="290" w="-1" h="-1" measuredW="136" measuredH="25" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>08/06/2012%20%20%20%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="19" controlTypeID="com.balsamiq.mockups::MediaControls" x="355" y="420" w="-1" h="-1" measuredW="110" measuredH="36" zOrder="10" locked="false" isInGroup="-1"/>
+    <control controlID="20" controlTypeID="com.balsamiq.mockups::Button" x="677" y="425" w="-1" h="-1" measuredW="90" measuredH="27" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>+%2010%20Linhas</text>
+      </controlProperties>
+    </control>
+    <control controlID="23" controlTypeID="com.balsamiq.mockups::HelpButton" x="951" y="281" w="-1" h="-1" measuredW="18" measuredH="18" zOrder="12" locked="false" isInGroup="-1"/>
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::HelpButton" x="951" y="127" w="-1" h="-1" measuredW="18" measuredH="18" zOrder="13" locked="false" isInGroup="-1"/>
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::Link" x="810" y="545" w="-1" h="-1" measuredW="143" measuredH="21" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Rela%E7%E3o%20pagar/receber</text>
+      </controlProperties>
+    </control>
+    <control controlID="26" controlTypeID="com.balsamiq.mockups::ComboBox" x="23" y="291" w="139" h="-1" measuredW="62" measuredH="23" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Jo%E3o</text>
+      </controlProperties>
+    </control>
+    <control controlID="27" controlTypeID="com.balsamiq.mockups::ComboBox" x="282" y="291" w="139" h="-1" measuredW="68" measuredH="23" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Pedro</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

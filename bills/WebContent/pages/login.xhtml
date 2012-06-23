@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/pages/template/template_padrao.xhtml">
+	
+	<ui:define name="cabecalho"></ui:define>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<ui:define name="conteudo">
+		<div id="container" align="left">
+			<h:form id="form" prependId="true">
+				<fieldset id="login">
+					<legend>Autenticação</legend>
+					<h:outputLabel value="Login" for="login" />
+					<h:inputText id="login" value="#{loginBean.login}" 
+						required="true" label="Login" 
+						requiredMessage="O login é obrigatório." />
+					<h:outputLabel value="Senha" for="senha" />
+					<h:inputSecret id="senha" value="#{loginBean.senha}" />
+					<br />
+					<h:commandButton 
+						id="logar"
+						value="Logar" action="#{loginBean.logar}" />
+				</fieldset>
+
+			</h:form>
+		</div>
+	</ui:define>
+		
+</ui:composition>

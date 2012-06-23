@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/pages/template/template_padrao.xhtml"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<ui:define name="conteudo">
+		<div id="container" align="left">
+			<div id="welcome">
+				<h1>Histórico</h1>
+				<h:form id="form">
+
+					<t:saveState value="#{billBean.bills}"/>
+					
+					<p:growl id="messages" showDetail="true" />
+					
+					<p:menubar>  
+				       <p:submenu label="Ano" icon="ui-icon-calendar">  
+				            <p:menuitem value="2012" url="#" />  
+				            <p:menuitem value="2013" url="#" />  
+				            <p:menuitem value="2014" url="#" />  
+				            <p:menuitem value="2015" url="#" />  
+				            <p:separator />  
+				            <p:menuitem value="Todos" url="#" />  
+				        </p:submenu>  
+				       <p:menuitem value="janeiro" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="fevereiro" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="março" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="abril" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="maio" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="junho" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="julho" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="agosto" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="setembro" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="outubro" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="novembro" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="dezembro" url="#" icon="ui-icon-carat-1-s" /> 
+			        </p:menubar>
+			        <br/> <br/>
+			        
+			        <div style="float:right; margin-top: 0px;">
+				        <p:calendar mode="inline"/>
+				       
+			        </div>
+			        <div style="float:left; width:700px;">
+						<p:dataTable var="item" value="#{billBean.bills}" id="billList"  emptyMessage="#{msg.dataTableEmpty}"
+							paginator="true" paginatorPosition="bottom" 
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+							rows="10" rowsPerPageTemplate="10,50,100"> 
+	
+							<f:facet name="header">
+					            Contas Quitadas
+					        </f:facet>
+	
+							<p:column headerText="Beneficiário" >
+								<h:outputText value="#{item.beneficiario}" />
+							</p:column>
+	
+							<p:column headerText="Valor" >
+								<h:outputText value="#{item.valor}" >
+									<f:convertNumber pattern="€ #{msg['mascara.moeda']}"/>
+								</h:outputText>
+							</p:column>
+	
+							<p:column headerText="Devedor" >
+								<h:outputText value="#{item.devedor}" />
+							</p:column>
+	
+							<p:column headerText="Motivo" >
+								<h:outputText value="#{item.motivo}" />
+							</p:column>
+							
+							<p:column headerText="Data" >
+								<h:outputText value="#{item.data}" />
+							</p:column>
+	
+						</p:dataTable>
+					</div>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+
+</ui:composition>

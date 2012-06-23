@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/pages/template/template_padrao.xhtml"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:p="http://primefaces.org/ui">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<ui:define name="conteudo">
+
+		<div id="container" align="left">
+			<div id="welcome">
+				<center>
+					<h:outputText value="Você não tem permissão para acessar o conteúdo desta página." styleClass="errors" rendered="#{!usuarioWeb.administrador}"/>
+				</center>
+				<h:form id="form" rendered="#{usuarioWeb.administrador}" enctype="multipart/form-data">
+					<h1>Configurações</h1>
+				
+					<t:saveState value="#{usuarioBean.usuarios}"/>
+					
+					<div style="float:right; margin-top: -20px;">
+						<fieldset class="usuarios">
+							<legend><b>Usuários</b></legend>
+							<p:dataList value="#{usuarioBean.usuarios}" var="usuario" styleClass="listUsuario" >
+								<p:column> 
+					           		<h:outputText value="#{usuario.login} "/>
+					           		<h:commandLink value="remover" action="#{usuarioBean.remove}" style="float: right;" immediate="true">
+					           			<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{usuario}" />
+					           		</h:commandLink>
+					           	</p:column>
+						     </p:dataList>
+					     </fieldset>
+					</div>
+					
+					<fieldset class="usuarios">
+						<h:outputText value="Auto Balance "/>
+						<p:selectBooleanButton onLabel="ON" onIcon="ui-icon-check" offLabel="OFF" offIcon="ui-icon-close" style="float: right;"/>  
+						<br/><br/>
+						<h:outputText value="Notificar atualizações"/>
+						<p:selectBooleanButton onLabel="ON" onIcon="ui-icon-check" offLabel="OFF" offIcon="ui-icon-close" style="float: right;"/>  
+						<br/>
+					</fieldset>
+					
+					<fieldset class="usuarios">
+						<legend><b>Novo usuário</b></legend>
+						<h:outputText value="usuário " />
+						<p:inputText label="login" value="#{usuarioBean.usuario.login}" required="true">
+							<f:validateLength minimum="3" />
+						</p:inputText>
+						<h:outputText value="email "/>
+						<p:inputText label="email" value="#{usuarioBean.usuario.email}" required="true"/>
+						<h:outputText value="senha "/>
+						<p:password label="senha" value="#{usuarioBean.usuario.senha}" required="true" redisplay="true"/>
+						<h:outputText value="confirmação "/>
+						<p:password label="confirmação" value="#{usuarioBean.confirmacaoDeSenha}" required="true" />
+						<br/>
+						<h:commandLink value="adicionar" action="#{usuarioBean.adiciona}"/>
+					</fieldset>
+					<p:fileUpload label="Importar planilha CSV" fileUploadListener="#{importCSVBean.importar}"
+				            mode="advanced" auto="true" sizeLimit="2097152" allowTypes="/(\.|\/)(csv|xls|xlsx)$/"
+				            invalidFileMessage="Extensão inválida"
+                           invalidSizeMessage="Tamanho máximo de 2MB"
+                           dragDropSupport="true"/>
+				</h:form>
+			</div>
+		</div>
+		
+		<style type="text/css">
+			.ui-widget-content {
+				background-color:#DDDDDD;
+				border: 0px;
+			}
+		</style>
+	</ui:define>
+
+</ui:composition>

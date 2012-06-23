@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/pages/template/template_padrao.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<ui:define name="conteudo">
+		<div id="container" align="left">
+			<div id="welcome">
+				<h1>Relatório</h1>
+				
+				<h:form prependId="false">
+					
+					<p:panel header="Balanço Geral" style="width:auto;">
+						<p:barChart value="#{chartBean.geralModel}" legendPosition="ne"  
+           					title="Relação por usuário" style="height:300px;"/>
+					</p:panel>
+					
+					<p:panel header="Meu balanço" rendered="false">
+						<p:barChart value="#{chartBean.pessoalModel}" legendPosition="ne"  
+           					title="#{chartBean.situacaoPessoal()}" style="height:300px"/>
+					</p:panel>
+					
+					<p:panel header="Balanço Diário" rendered="false">
+						<p:lineChart value="#{chartBean.linearModel}" legendPosition="ne"  
+           					title="Relação diária" style="height:300px"/>
+					</p:panel>
+				    
+				 </h:form>
+			</div>
+		</div>
+	</ui:define>
+
+</ui:composition>

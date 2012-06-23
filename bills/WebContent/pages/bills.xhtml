@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/pages/template/template_padrao.xhtml"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:p="http://primefaces.org/ui">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<ui:define name="conteudo">
+		<div id="containerMax" align="center">
+			<div id="welcome">
+				<h1>Bills</h1>
+				<h:form id="form" onkeypress="return checkEnter(event)">
+
+					<t:saveState value="#{billBean.bills}"/>
+					<t:saveState value="#{billBean.billsBalanceadasPorPessoa}"/>
+					
+					<div style="float:right; margin-top: 0px;">
+					
+						<p:panel header="Balanço Por Pessoa" toggleable="true" style="float: right; width: 250px;">
+							<p:dataList value="#{billBean.billsBalanceadasPorPessoa}" 
+							var="billBalanceada">  
+				            <div style="text-align: left;" >
+				           		#{billBalanceada.beneficiario} <img src="${ctx}/resources/images/left.png" alt="Recebe" /> #{billBalanceada.valor}  #{billBalanceada.devedor}
+				            </div>
+				        </p:dataList>
+						</p:panel>
+						<br/>
+						<p:panel header="Balanço Geral" toggleable="true" style="float: right; width: 250px;" rendered="false">
+						</p:panel>
+						<br/>
+						<p:panel header="Meu balanço" toggleable="true" style="float: right; width: 250px;">
+							<p:barChart id="basic" value="#{chartBean.pessoalModel}" legendPosition="ne"  
+            					title="#{chartBean.situacaoPessoal()}" style="height:200px"/>
+            				<h:commandLink value="Relação Pagar/Receber" action="#{billBean.prepararRelatorio}"/>
+						</p:panel>
+					</div>
+					
+					<div style="float:left; width:840px;">
+						<p:dataTable var="item" value="#{billBean.bills}" id="billList"  emptyMessage="#{msg.dataTableEmpty}"
+							editable="true" paginator="true" first="9999" paginatorPosition="bottom"
+							selection="#{billBean.selectedBills}" rowKey="#{item.id}" 
+							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+							rows="10" rowsPerPageTemplate="10,50,100"> 
+	
+							<f:facet name="header">
+					            Contas Pendentes
+					        </f:facet>
+	
+							<p:column headerText="Beneficiário" sortBy="#{item.beneficiario}" filterBy="#{item.beneficiario}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{item.beneficiario}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:autoComplete value="#{item.beneficiario}" style="width:100%"   
+                    						completeMethod="#{billBean.completeBeneficiario}"/>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+	
+							<p:column headerText="Valor" sortBy="#{item.valor}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{item.valor}"  >
+											<f:convertNumber pattern="€ #{msg['mascara.moeda']}"/>
+										</h:outputText>
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{item.valor}" style="width:100%" >
+										</p:inputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+	
+							<p:column headerText="Devedor" sortBy="#{item.devedor}" filterBy="#{item.devedor}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{item.devedor}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:autoComplete value="#{item.devedor}" style="width:100%"   
+                    						completeMethod="#{billBean.completeDevedor}"/>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+	
+							<p:column headerText="Motivo" sortBy="#{item.motivo}" filterBy="#{item.motivo}" >
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{item.motivo}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:autoComplete value="#{item.motivo}" style="width:100%"   
+                    						completeMethod="#{billBean.completeMotivo}"/>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column headerText="Data" sortBy="#{item.data}">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{item.data}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:calendar value="#{item.data}" selectListener="#{billBean.setData}"
+											style="width:10%;" pattern="#{msg['mascara.data.diaMesAno']}">
+										</p:calendar>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							
+							<p:column headerText="Editar" style="width:50px;">
+								<p:rowEditor>
+									<p:ajaxStatus oncomplete="#{billBean.atualizarBills(item)}"/>
+								</p:rowEditor>
+							</p:column>
+							
+							<p:column headerText="Remover"  selectionMode="multiple" style="width:18px" />
+								
+							<f:facet name="footer">
+								<p:commandButton value="Adicionar 5 linhas" action="#{billBean.addLinhas}" ajax="false" 
+									icon="ui-icon-circle-plus" style="float: left;"/>
+								
+					            <p:commandButton id="multiViewButton" value="Remover selecionados" icon="ui-icon-closethick"  
+					                 update=":form:displayMulti" oncomplete="multiBillDialog.show()" style="float: right;"/>  
+					        </f:facet> 
+						</p:dataTable>
+					</div>
+
+					<p:dialog id="multiDialog" header="Registros enviados para o histórico"
+						widgetVar="multiBillDialog" width="400" showEffect="fade"
+						hideEffect="explode">
+						
+						<p:commandButton id="multiViewButton" value="Confirmar" action="#{billBean.enviarContasHistorico}" ajax="false" icon="ui-icon-check"/> 
+						
+						<p:dataList id="displayMulti" value="#{billBean.selectedBills}" 
+							var="selectedBill">  
+				            <div style="text-align: left;" >
+				           		#{selectedBill.beneficiario} &lt;-- #{selectedBill.valor}  #{selectedBill.devedor} (#{selectedBill.motivo})
+				            </div>
+				        </p:dataList>
+				        
+					</p:dialog>
+
+				</h:form>
+
+			</div>
+		</div>
+	</ui:define>
+
+</ui:composition>

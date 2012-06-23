@@ -1,0 +1,22 @@
+BUGS
+
+* tratar virgula na tabela
+* quando usa autocomplete esta indo no BD, e nao deve.
+* ao salvar atualizar widget ou link refresh depois de salvar registro
+* ao dar update os caracteres especiais estao sendo alterados
+
+TODO
+
+* registrar modificacoes na tabela de alteracoes
+* widget Balanco Geral
+* filtros mensais e anual no historico
+* filtro no historico pela data selecionada no calendario
+* fazer grafico de linhas mensal e diario
+* Ligar e desligar autobalance na tela de configuracoes
+* notificar atualizacoes ao logar (home.xhtml)
+* ligar e desligar notificacao das atualizacoes para cada usuario (individual)
+
+
+MODULO 2
+
+* Elaborar planejamento de contas

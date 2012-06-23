@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/pages/template/template_padrao.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<ui:define name="conteudo">
+		<div id="containerMax" align="left">
+			<div id="welcome">
+				<h1>FAQ</h1>
+				<h:form id="form">
+					<p:accordionPanel >
+						<p:tab title="Funcionamento">
+							<h:outputText
+								value="A ideia do projeto consiste em desenvolver uma ferramenta Web para controle de contas a pagar e receber. 
+								E baseia-se em uma planilha do excel usada para controlar contas entre um grupo de pessoas." />
+						</p:tab>
+						
+						<p:tab title="Autenticação">
+							<h:outputText
+								value="Para que a ferramenta tenha um nível mínimo de segurança, é necessário ter uma tela de autenticação.
+								 O usuário e senha de autenticação deve ser cadastrada no menu Configurações da aplicação. 
+								 Caso seja a primeira execução da aplicação, ou seja, caso não tenha usuário cadastrado, a tela de configuração deve ser 
+								 aberta para o cadastro dos usuários e configurações iniciais. O primeiro usuário cadastrado deve ter perfil de administrador.
+								 A autenticação é necessária para que um informativo de alterações da tabela seja gerado com as mudanças feitas no registro, 
+								 bem como o usuário que a fez. Este informativo deve ser mostrado quando o usuário logar na aplicação, de acordo com as 
+								 configurações definidas na ferramenta. O informativo deve conter todas as alterações desde o último login do usuário." />
+						</p:tab>
+						<p:tab title="Gerenciamento de contas">
+							<h:outputText value="A tela principal, representada pela figura 2 exibe uma planilha semelhante mostrada no início do documento.
+							 Onde é possível fazer o cadastro de uma nova conta ou a sua “exclusão” através do link (x) na coluna Editar. 
+							 Quando um registro é marcado para exclusão, este não deve ser removido do banco de dados da aplicação. 
+							 O registro da conta deve receber uma flag para ser mostrado somente no histórico, e não mais na tela principal do sistema, 
+							 onde as alterações são feitas.
+								O campo Data da tabela deve ter um calendar, para facilitar na escolha da data.
+								A tabela deve ter paginação, com listagem default de 20 registros.
+								O cadastro e edição dos dados devem ser feitos na própria tabela.
+								Sempre que ocorrer uma alteração na tabela, estes dados devem ser salvos através de um link (v) exibido na coluna Editar.
+								As modificações devem ser enumeradas, datadas e assinadas pelo usuário que fez a operação e inserido em uma nova tabela, conforme o modelo do banco de dados apresentado na figura 7 do documento.
+								Quando não houver mais registros vazios na tabela principal, o usuário deve clicar no botão 
+								“+ 10 Linhas” para inserir novos registros vazios para serem editados quando uma nova contar tiver que ser registrada. 
+								O campo Beneficiário e Devedor deve ser preenchido através de um campo de texto autocomplete, contendo todos os beneficiários/devedores
+								 já registrados no sistema. Um usuário que não está cadastrado poderá ser registrado nas contas normalmente." />
+						</p:tab>
+						<p:tab title="Widgets">
+							<h:outputText value="No menu direito devem existir três widgets, Balanço por Pessoa, Balanço Geral e Relação pagar/receber. 
+							O primeiro refere-se a um balanço realizado de pessoa para pessoa a partir da tabela principal, onde toda conta que Fulano deve para 
+							Ciclano, deve ser somada ou subtraída caso haja outras contas com este mesmo beneficiário/devedor. O Segundo deve exibir um cálculo 
+							aprimorado, baseado no primeiro widget, de forma que se Maria deve para João e Pedro deve para Maria, então Pedro deve para João o 
+							valor (total ou parcial) que Maria devia para João. O terceiro consiste em um gráfico de barras que exibe o valor em débito e o valor 
+							em crédito do usuário logado. Caso o usuário queira saber o valor de todas as pessoas, é necessário clicar no link “Relação pagar/receber”,
+							 e verificar esta informação na tela de Relatório, figura 5.
+								Ambos widgets são atualizados a cada alteração no sistema.
+								Os widgets devem ter um informativo de funcionamento, indicando a explicação do cálculo nesta FAQ." />
+						</p:tab>
+						<p:tab title="Configurações">
+							<h:outputText value="A tela de configurações, mostrada na figura 3, deve ser acessada somente pelo usuário administrador do sistema.
+								Nesta tela é possível ligar e desligar os widgets de auto balanceamento mostrados na figura 2. Quando o Auto Balance estiver 
+								desligado os widgets na lateral não devem aparecer.
+								A adição e remoção de novos usuários da aplicação podem ser feitas nesta tela.
+								Caso a funcionalidade “Notificar todos usuários ao logar na aplicação” esteja ativa, os usuários serão notificados com o 
+								informativo de alterações desde o seu último login. Caso contrário esta notificação deixa de aparecer." />
+						</p:tab>
+						<p:tab title="Histórico">
+							<h:outputText value="A tela de Histórico dos registros que já foram pagos não deve sofrer alterações, 
+							deve apenas ter paginação e ordenação dos registros.
+							Por padrão, quando a tela de histórico for aberta deverá mostrar o histórico do mês corrente.
+							 Porém, o usuário pode selecionar outro mês ou um histórico anual, de acordo com o ano selecionado na comboBox, cujo ano padrão é 
+							 o ano corrente. O usuário tem a opção de selecionar datas específicas de acordo com o calendário exibido a direita da tela. 
+							A tabela deve ter paginação, com listagem default de 20 registros." />
+						</p:tab>
+						<p:tab title="Relatórios">
+							<h:outputText value="A tela de relatório possui duas visões. Na primeira é possível visualizar a 
+							relação de contas a pagar e receber de todos os usuários. A segunda tela de relatório exibe três gráficos, de acordo com o usuário selecionado. 
+							Esta tela pode ser aberta através do link “Ver por pessoa”. O gráfico de barras e o gráfico de pizza mostram a relação de contas pagar/receber, 
+							semelhante ao widget exibido na Tela principal. O gráfico de linhas mostra o andamento das contas a pagar e receber mês a mês caso a visualização 
+							seja anual. Para a visualização mensal, este gráfico deve apresentar a evolução diária.
+							Todas as informações dos gráficos podem ser visualizadas mensalmente ou anualmente, conforme apresentado no protótipo." />
+						</p:tab>
+						<p:tab title="Tecnologias">
+							<h:outputText value="Java Web: JSF 2.0, Primefaces 3.3, Spring Core 3.0, JPA 2.0 e Hibernate 3.0. Tomcat 7.0, MySQL 5.5." />
+						</p:tab>
+						
+					</p:accordionPanel>
+									
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+
+</ui:composition>
