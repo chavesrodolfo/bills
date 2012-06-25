@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/pages/template/template_padrao.xhtml">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<ui:define name="conteudo">
+		<h:form>
+		
+		
+					
+		<div id="content" class="container-fluid">
+			<div class="container well">
+					Login
+					<h:inputText id="login" value="#{loginBean.login}" required="true" label="Login" requiredMessage="O login é obrigatório." />
+					Senha 
+					<h:inputSecret id="senha" value="#{loginBean.senha}" />
+					
+					<h:commandButton id="logar"	value="Entrar" action="#{loginBean.logar}" />
+				<div class="row">
+					
+					
+					<a href="https://github.com/chavesrodolfo/bills"><img style="float: right;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+	
+					<div class="hero-unit">
+	
+					<img src="${ctx}/resources/images/logo.png" width="10%" style="float: left"/>
+					<p><h1 class="special-title">Projeto Bills</h1></p>
+					<p>
+						A ideia do projeto consiste em desenvolver uma ferramenta Web para controle financeiro pessoal.
+						O primeiro módulo é um <b>controle de contas a pagar e receber</b> baseando-se em uma planilha do excel usada para controlar contas entre um grupo de pessoas.
+						O segundo módulo é um esquema de anotações de <b>gastos diários</b> que tem o objetivo de deixar a vida financeira transparente para o usuário.
+					</p>
+	
+					<p><a class="btn btn-primary" href="#">Mantenha sua vida financeira organizada</a></p>
+					
+				</div>
+				</div>
+				<div class="row">
+	
+					<div class="span4">
+						<div class="">
+							<h3 class="page-header"><img src="${ctx}/resources/images/glyphicons_232_cloud.png"/> Rodando nas nuvens</h3>
+	
+							<p>O Projeto Bills roda continuamente nas <b>nuvens</b> sem a necessidade de ser instalado.
+								Saiba como funciona através da <b><a href="${ctx}/pages/faq.xhtml">FAQ</a></b>.</p>
+						</div>
+					</div>
+	
+					<div class="span4">
+						<div class="">
+							<h3 class="page-header">Faça parte <a href="https://github.com/chavesrodolfo/bills" rel="tooltip" title="See the source code in GitHub"><img src="${ctx}/resources/images/GitHub_Logo.png"/></a></h3>
+	
+							<p>O projeto está disponível no <a href="https://github.com/chavesrodolfo/bills" rel="tooltip" title="See the source code in GitHub"><b>GitHub</b></a>. 
+							Com apenas um clique você pode baixar o código fonte e fazer parte da equipe.</p>
+						</div>
+					</div>
+	
+					<div class="span4">
+						<div class="">
+							<h3 class="page-header"><img src="${ctx}/resources/images/glyphicons_019_cogwheel.png"/> Customizações</h3>
+	
+							<p>A aplicação tem uma série de configurações, onde o usuário opta por receber as atualizações que ele julga importante. Além de ativar/desativar as opções que auxiliam o usuário a ver sua situação financeira.
+							</p>
+						</div>
+					</div>
+				</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>	
+		
+</ui:composition>
+
+
+				

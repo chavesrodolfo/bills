@@ -1,6 +1,7 @@
 package br.com.bills.security;
 
 import java.io.IOException;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -18,10 +19,12 @@ import br.com.bills.controller.UsuarioWeb;
 public class SecurityFilter implements Filter {
 
 	private static final String LOGIN_PAGE = "/pages/login.xhtml";
+	private static final String INDEX_PAGE = "/pages/index.xhtml";
 	private static final String FAQ_PAGE = "/pages/faq.xhtml";
 	private static final String HOME_PAGE = "/index.jsp";
 	private static final String FACES_RESOURCES = "/javax.faces.resource";
 	private static final String IMG_PNG = ".png";
+	private static final String CSS = ".css";
 	
 	@Override
 	public void init(FilterConfig config) throws ServletException {}
@@ -54,7 +57,8 @@ public class SecurityFilter implements Filter {
 				|| path.equals(FAQ_PAGE)
 				|| path.startsWith(FACES_RESOURCES)
 				|| path.equals(HOME_PAGE)
-				|| path.contains(IMG_PNG);
+				|| path.equals(INDEX_PAGE)
+				|| path.contains(IMG_PNG) || path.contains(CSS);
 	}
 
 	@Override

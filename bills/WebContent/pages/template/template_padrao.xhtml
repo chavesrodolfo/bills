@@ -13,46 +13,54 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Bills</title>
-	<h:outputStylesheet library="css" name="app.css" />
+	<link type="text/css" rel="stylesheet" href="${ctx}/resources/css/screen.css"/>
+    <link rel="stylesheet" href="${ctx}/resources/css/bootstrap.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="${ctx}/resources/css/custom.css" type="text/css" media="all"/>
+	<link href='http://fonts.googleapis.com/css?family=Rokkitt' rel='stylesheet' type='text/css'/> 
 	<h:outputScript library="js" name="functions.js" />
+	<!-- Add JavaScript library for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 </h:head>
 
 <h:body>
-	
+	 <a href="${ctx}"> <div id="logo"><div class="wrap"><h1>Bills</h1></div></div> </a>
+
+	<div id="container">
 		<ui:insert name="cabecalho">
 			<ui:include src="/pages/template/cabecalho.xhtml" />
 		</ui:insert>
-		
-		
+
+
 		<ui:insert name="mensagens">
 			<p:outputPanel autoUpdate="true">
 				<h:panelGroup id="mensagens" layout="block">
 					<h:messages infoClass="notice" errorClass="errors" />
 				</h:panelGroup>
 			</p:outputPanel>
-		</ui:insert> 
-		
-		
-		<div id="contentWrap" align="center">
-			<div id="ajax-loading">
-				<p:ajaxStatus>
-					<f:facet name="start">
-	                    <h:graphicImage library="images" name="ajax-loader.gif" />
-	                </f:facet>
-					<f:facet name="complete">
-						<h:outputText value="" />
-	                </f:facet>
-				</p:ajaxStatus>
-			</div>
-			<ui:insert name="conteudo">
-				<!-- entre com o conteudo aqui -->
-			</ui:insert>
+		</ui:insert>
+
+		<div id="ajax-loading">
+			<p:ajaxStatus>
+				<f:facet name="start">
+					<h:graphicImage library="images" name="ajax-loader.gif" />
+				</f:facet>
+				<f:facet name="complete">
+					<h:outputText value="" />
+				</f:facet>
+			</p:ajaxStatus>
 		</div>
-		
+
+		<ui:insert name="conteudo">
+			<!-- entre com o conteudo aqui -->
+		</ui:insert>
+	</div>
+	<footer>
 		<ui:insert name="rodape">
 			<ui:include src="/pages/template/rodape.xhtml" />
 		</ui:insert>
-		
-	</h:body>
+	</footer>
+</h:body>
 	
 </html>

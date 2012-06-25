@@ -59,5 +59,5 @@ public class LoginBean {
 	public void setFacesUtils(FacesUtils facesUtils) {
 		this.facesUtils = facesUtils;
 	}
-	
+
 }

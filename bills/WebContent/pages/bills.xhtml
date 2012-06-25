@@ -11,23 +11,24 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	
 	<ui:define name="conteudo">
-		<div id="containerMax" align="center">
-			<div id="welcome">
+		<div id="content" class="container-fluidMax">
+			<div class="container well">
 				<h1>Bills</h1>
 				<h:form id="form" onkeypress="return checkEnter(event)">
 
 					<t:saveState value="#{billBean.bills}"/>
 					<t:saveState value="#{billBean.billsBalanceadasPorPessoa}"/>
+					<t:saveState value="#{chartBean.pessoalModel}"/>
 					
 					<div style="float:right; margin-top: 0px;">
 					
 						<p:panel header="Balanço Por Pessoa" toggleable="true" style="float: right; width: 250px;">
 							<p:dataList value="#{billBean.billsBalanceadasPorPessoa}" 
-							var="billBalanceada">  
-				            <div style="text-align: left;" >
-				           		#{billBalanceada.beneficiario} <img src="${ctx}/resources/images/left.png" alt="Recebe" /> #{billBalanceada.valor}  #{billBalanceada.devedor}
-				            </div>
-				        </p:dataList>
+								var="billBalanceada">  
+					            <div style="text-align: left;" >
+					           		#{billBalanceada.beneficiario} <img src="${ctx}/resources/images/left.png" alt="Recebe" /> #{billBalanceada.valor}  #{billBalanceada.devedor}
+					            </div>
+				        	</p:dataList>
 						</p:panel>
 						<br/>
 						<p:panel header="Balanço Geral" toggleable="true" style="float: right; width: 250px;" rendered="false">
@@ -120,7 +121,7 @@
 								</p:rowEditor>
 							</p:column>
 							
-							<p:column headerText="Remover"  selectionMode="multiple" style="width:18px" />
+							<p:column headerText="Remover" selectionMode="multiple" style="width:18px;" />
 								
 							<f:facet name="footer">
 								<p:commandButton value="Adicionar 5 linhas" action="#{billBean.addLinhas}" ajax="false" 

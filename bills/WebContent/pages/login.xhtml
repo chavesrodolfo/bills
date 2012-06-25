@@ -5,10 +5,13 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/pages/template/template_padrao.xhtml">
 	
-	<ui:define name="cabecalho"></ui:define>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
 	<ui:define name="conteudo">
-		<div id="container" align="left">
+	
+		<div id="content" class="container-fluid">
+			<div class="container well">
+
 			<h:form id="form" prependId="true">
 				<fieldset id="login">
 					<legend>Autenticação</legend>
@@ -25,6 +28,7 @@
 				</fieldset>
 
 			</h:form>
+			</div>
 		</div>
 	</ui:define>
 		

@@ -12,8 +12,8 @@
 
 	<ui:define name="conteudo">
 
-		<div id="container" align="left">
-			<div id="welcome">
+		<div id="content" class="container-fluid" align="left">
+			<div class="container well">
 				<center>
 					<h:outputText value="Você não tem permissão para acessar o conteúdo desta página." styleClass="errors" rendered="#{!usuarioWeb.administrador}"/>
 				</center>
@@ -58,9 +58,9 @@
 						<h:outputText value="confirmação "/>
 						<p:password label="confirmação" value="#{usuarioBean.confirmacaoDeSenha}" required="true" />
 						<br/>
-						<h:commandLink value="adicionar" action="#{usuarioBean.adiciona}"/>
+						<b><h:commandLink value="adicionar" style="float: right; margin-right: 25px;" action="#{usuarioBean.adiciona}"/></b>
 					</fieldset>
-					<p:fileUpload label="Importar planilha CSV" fileUploadListener="#{importCSVBean.importar}"
+					<p:fileUpload label="Importar" fileUploadListener="#{importCSVBean.importar}"
 				            mode="advanced" auto="true" sizeLimit="2097152" allowTypes="/(\.|\/)(csv|xls|xlsx)$/"
 				            invalidFileMessage="Extensão inválida"
                            invalidSizeMessage="Tamanho máximo de 2MB"

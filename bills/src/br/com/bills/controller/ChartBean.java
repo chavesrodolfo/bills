@@ -118,10 +118,12 @@ public class ChartBean implements Serializable {
 		contasReceber = new Double(0);
 		contasPagar = new Double(0);
 		for (Bill bill : bills) {
-			if (bill.getBeneficiario().equals(usuario.getLogin())) {
-				contasReceber += bill.getValor();
-			} else if (bill.getDevedor().equals(usuario.getLogin())) {
-				contasPagar += bill.getValor();
+			if (bill.getEstado().equals(BillsConstants.CONTA_ATIVA)) {
+				if (bill.getBeneficiario().equals(usuario.getLogin())) {
+					contasReceber += bill.getValor();
+				} else if (bill.getDevedor().equals(usuario.getLogin())) {
+					contasPagar += bill.getValor();
+				}
 			}
 		}
 	}
@@ -166,13 +168,6 @@ public class ChartBean implements Serializable {
 
 	public PieChartModel getPieModel() {
 		return pieModel;
-	}
-
-	private void createPieModel() {
-		pieModel = new PieChartModel();
-
-		pieModel.set("Receber", 120);
-		pieModel.set("pagar", 52);
 	}
 
 	public CartesianChartModel getPessoalModel() {
