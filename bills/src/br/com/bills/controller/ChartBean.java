@@ -119,9 +119,11 @@ public class ChartBean implements Serializable {
 		contasPagar = new Double(0);
 		for (Bill bill : bills) {
 			if (bill.getEstado().equals(BillsConstants.CONTA_ATIVA)) {
-				if (bill.getBeneficiario().equals(usuario.getLogin())) {
+				if (bill.getBeneficiario().toLowerCase()
+						.equals(usuario.getLogin().toLowerCase())) {
 					contasReceber += bill.getValor();
-				} else if (bill.getDevedor().equals(usuario.getLogin())) {
+				} else if (bill.getDevedor().toLowerCase()
+						.equals(usuario.getLogin().toLowerCase())) {
 					contasPagar += bill.getValor();
 				}
 			}

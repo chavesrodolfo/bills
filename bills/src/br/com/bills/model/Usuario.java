@@ -2,6 +2,7 @@ package br.com.bills.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ public class Usuario implements Serializable {
 	private String login;
 	private String senha;
 	private String email;
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ID_PERFIL", referencedColumnName = "id")
 	private Perfil perfil;
 

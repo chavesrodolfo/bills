@@ -11,8 +11,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
-import org.primefaces.event.RowEditEvent;
-
 import br.com.bills.controller.util.BillsConstants;
 import br.com.bills.controller.util.FacesUtils;
 import br.com.bills.dao.BillDao;
@@ -321,18 +319,6 @@ public class BillBean {
 		}
 
 		return toReturn;
-	}
-
-	public void alteracaoTabela(RowEditEvent event) {
-		System.out.println("incell " + event.getObject());
-	}
-
-	public void balancoGeral() {
-
-	}
-
-	public void meuBalanco() {
-
 	}
 
 	public Bill getBill() {

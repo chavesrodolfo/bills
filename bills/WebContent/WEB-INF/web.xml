@@ -47,7 +47,8 @@
 	</context-param>
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
-		<param-value>Development</param-value>
+<!-- 		<param-value>Development</param-value> -->
+		<param-value>Production</param-value>
 	</context-param>
 	<context-param>
 		<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
@@ -59,7 +60,12 @@
 	</context-param>
 	<context-param>
 		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-		<param-value>server</param-value>
+<!-- 		<param-value>server</param-value> -->
+		<param-value>client</param-value>
+	</context-param>
+	<context-param>
+	<param-name>com.sun.faces.enableThreading</param-name>
+	<param-value>false</param-value>
 	</context-param>
 	<context-param>
 		<param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>

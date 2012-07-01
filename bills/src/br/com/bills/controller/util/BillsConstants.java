@@ -6,7 +6,7 @@ public class BillsConstants {
 	public static final String USER = "USER";
 	public static final String CONTA_INATIVA = "inativa";
 	public static final String CONTA_ATIVA = "ativa";
-	public static final Object EMPTY = "";
-	public static final Object USER_ADMIN = "admin";
+	public static final String EMPTY = "";
+	public static final String USER_ADMIN = "admin";
 
 }
