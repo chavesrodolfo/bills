@@ -17,7 +17,7 @@
 		                <div class="container">
 		                	<h:panelGroup rendered="#{usuarioWeb.logado}" layout="block">
 			                    <ul class="nav">
-			                       <li><a href="${ctx}/pages/home.xhtml">Home</a></li>
+			                       <li><h:commandLink value="Home" action="#{informativoBean.preparaInformativo}"/></li>
 								<li><h:commandLink value="Bills" action="#{billBean.prepararBills}"/></li>
 								<li><h:commandLink value="Histórico" action="#{billBean.prepararHistorico}"/></li>
 								<li><h:commandLink value="Relatório" action="#{billBean.prepararRelatorio}"/></li>

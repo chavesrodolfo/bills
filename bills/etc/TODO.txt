@@ -1,9 +1,10 @@
 BUGS
 
-* tratar virgula na tabela
-* quando usa autocomplete esta indo no BD, e nao deve.
-* ao salvar atualizar widget ou link refresh depois de salvar registro
 * ao dar update os caracteres especiais estao sendo alterados
+* listar informativo usado data no hql
+TODO - Services
+
+* registrar historico (ImportCSVBean.java)
 
 TODO
 

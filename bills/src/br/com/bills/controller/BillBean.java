@@ -15,7 +15,7 @@ import br.com.bills.controller.util.BillsConstants;
 import br.com.bills.controller.util.FacesUtils;
 import br.com.bills.dao.BillDao;
 import br.com.bills.model.Bill;
-import br.com.bills.model.HistoricoAlteracao;
+import br.com.bills.service.OperacoesBill;
 
 @ManagedBean
 @RequestScoped
@@ -47,6 +47,9 @@ public class BillBean {
 	@ManagedProperty("#{chartBean}")
 	private ChartBean chartBean;
 
+	@ManagedProperty("#{operacoesBill}")
+	private OperacoesBill operacoesBill;
+
 	public String prepararBills() {
 		listaAtivas();
 		chartBean.gerarGraficoBarrasPessoal();
@@ -67,7 +70,7 @@ public class BillBean {
 	public String prepararRelatorio() {
 		chartBean.gerarGraficoBarrasPessoal();
 		chartBean.gerarGraficoBarrasGeral();
-		// chartBean.gerarGraficoLinhasGeral();
+		// TODO chartBean.gerarGraficoLinhasGeral();
 		return "/pages/relatorio.xhtml";
 	}
 
@@ -78,12 +81,9 @@ public class BillBean {
 	}
 
 	public void adiciona() {
+		operacoesBill.gerarInformativoAlteracoes(bill, bill,
+				BillsConstants.OP_INSERT, usuarioWeb.getUsuario());
 		billDao.salva(bill);
-	}
-
-	public void altera() {
-		billDao.atualiza(bill);
-		listaAtivas();
 	}
 
 	public void addLinhas() {
@@ -92,8 +92,7 @@ public class BillBean {
 			adiciona();
 		}
 		listaAtivas();
-		facesUtils
-				.adicionaMensagemDeInformacao("Registros adicionados com sucesso!");
+		facesUtils.adicionaMensagemDeInformacao("Registros adicionados com sucesso!");
 	}
 
 	public void atualizarBills(Bill billAlterada) {
@@ -103,7 +102,8 @@ public class BillBean {
 				if ((!billOriginal.equalsValue(billAlterada))) {
 					billAlterada.setUsuario(usuarioWeb.getUsuario());
 					billAlterada.setUltimaAlteracao(new Date());
-					gerarInformativoAlteracoes(billOriginal, billAlterada);
+					operacoesBill.gerarInformativoAlteracoes(billOriginal,
+							billAlterada, BillsConstants.OP_UPDATE, usuarioWeb.getUsuario());
 					billDao.atualiza(billAlterada);
 				}
 			}
@@ -117,13 +117,6 @@ public class BillBean {
 		return billsAtivas;
 	}
 
-	private void gerarInformativoAlteracoes(Bill billAntiga, Bill billAtual) {
-		HistoricoAlteracao informativo = new HistoricoAlteracao();
-		informativo.setBillAntiga(billAntiga);
-		informativo.setBillAtual(billAtual);
-
-	}
-
 	public void enviarContasHistorico() {
 		String msg = "";
 		boolean erro = false;
@@ -132,6 +125,8 @@ public class BillBean {
 			for (Bill conta : selectedBills) {
 				if (contaValidaPreenchida(conta)) {
 					conta.setEstado(BillsConstants.CONTA_INATIVA);
+					operacoesBill.gerarInformativoAlteracoes(conta, conta,
+							BillsConstants.OP_REMOVE, usuarioWeb.getUsuario());
 					billDao.atualiza(conta);
 				} else {
 					msg = "Alguma conta selecionada não pode ser removida.";
@@ -169,7 +164,7 @@ public class BillBean {
 
 	public List<String> completeBeneficiario(String query) {
 		Set<String> results = new HashSet<String>();
-		todasBills = getTodasBills();
+		todasBills = getTodasBillsSing();
 
 		for (Bill b : todasBills) {
 			if (b != null && b.getBeneficiario() != null) {
@@ -184,7 +179,7 @@ public class BillBean {
 
 	public List<String> completeDevedor(String query) {
 		Set<String> results = new HashSet<String>();
-		todasBills = getTodasBills();
+		todasBills = getTodasBillsSing();
 
 		for (Bill b : todasBills) {
 			if (b != null && b.getDevedor() != null) {
@@ -200,7 +195,7 @@ public class BillBean {
 
 	public List<String> completeMotivo(String query) {
 		Set<String> results = new HashSet<String>();
-		todasBills = getTodasBills();
+		todasBills = getTodasBillsSing();
 
 		for (Bill b : todasBills) {
 			if (b != null && b.getMotivo() != null) {
@@ -213,7 +208,7 @@ public class BillBean {
 		return resultsList;
 	}
 
-	private List<Bill> getTodasBills() {
+	private List<Bill> getTodasBillsSing() {
 		if (todasBills == null) {
 			todasBills = billDao.listaTudo();
 		}
@@ -401,6 +396,10 @@ public class BillBean {
 		this.todasBills = todasBills;
 	}
 
+	public List<Bill> getTodasBills() {
+		return todasBills;
+	}
+
 	public List<Bill> getBillsBalanceadasPorPessoa() {
 		return billsBalanceadasPorPessoa;
 	}
@@ -416,6 +415,14 @@ public class BillBean {
 
 	public void setChartBean(ChartBean chartBean) {
 		this.chartBean = chartBean;
+	}
+
+	public OperacoesBill getOperacoesBill() {
+		return operacoesBill;
+	}
+
+	public void setOperacoesBill(OperacoesBill operacoesBill) {
+		this.operacoesBill = operacoesBill;
 	}
 
 }

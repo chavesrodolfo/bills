@@ -28,8 +28,18 @@
 					
 					<p>
 						Resumo
-						<p:dataList >
-			        	</p:dataList>
+						<p:dataList value="#{informativoBean.informativo}" 
+								var="informativo">  
+					            <div style="text-align: left;" >
+					           		<b>#{informativo.operacao}</b> efetuada por <b>#{informativo.usuario.login}</b><br/>
+					           		<b>Conta antiga</b><br/>
+						           		#{informativo.beneficiario} &lt;- #{informativo.valor} - #{informativo.devedor} - registrado em #{informativo.data} - 
+						           		#{informativo.motivo} - #{informativo.estado} - alterado em #{informativo.ultimaAlteracao}
+					           		<br/><b>Conta nova</b><br/>
+						           		informacoes em breve
+						           	<br/><br/>
+					            </div>
+				        	</p:dataList>
 		        	</p>
 					<p>
 						Reportar BUGs

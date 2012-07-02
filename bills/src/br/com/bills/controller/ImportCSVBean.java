@@ -17,6 +17,7 @@ import br.com.bills.controller.util.BillsConstants;
 import br.com.bills.controller.util.FacesUtils;
 import br.com.bills.dao.BillDao;
 import br.com.bills.model.Bill;
+import br.com.bills.service.OperacoesBill;
 
 @ManagedBean
 @RequestScoped
@@ -33,6 +34,9 @@ public class ImportCSVBean {
 	@ManagedProperty("#{facesUtils}")
 	private FacesUtils facesUtils;
 
+	@ManagedProperty("#{operacoesBill}")
+	private OperacoesBill operacoesBill;
+	
 	public void importar(FileUploadEvent event) {
 
 		byte fileContent[] = event.getFile().getContents();
@@ -59,7 +63,8 @@ public class ImportCSVBean {
 				bill.setData(construirData(campos[4]));
 				bill.setEstado(BillsConstants.CONTA_ATIVA);
 				bill.setUltimaAlteracao(new Date());
-				// bill.setUsuario(usuarioWeb.getUsuario());
+				bill.setUsuario(usuarioWeb.getUsuario());
+				operacoesBill.gerarInformativoAlteracoes(bill, bill, BillsConstants.OP_INSERT, usuarioWeb.getUsuario());
 				billDao.salva(bill);
 			}
 			facesUtils
@@ -114,5 +119,15 @@ public class ImportCSVBean {
 	public void setFacesUtils(FacesUtils facesUtils) {
 		this.facesUtils = facesUtils;
 	}
+
+	public OperacoesBill getOperacoesBill() {
+		return operacoesBill;
+	}
+
+	public void setOperacoesBill(OperacoesBill operacoesBill) {
+		this.operacoesBill = operacoesBill;
+	}
+	
+	
 
 }

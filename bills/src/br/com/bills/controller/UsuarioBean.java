@@ -1,6 +1,7 @@
 package br.com.bills.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -67,7 +68,7 @@ public class UsuarioBean {
 		} else {
 			usuario.setPerfil(perfis.get(1));
 		}
-
+		usuario.setUltimoLogin(new Date());
 		usuarioDao.salva(usuario);
 		facesUtils
 				.adicionaMensagemDeInformacao("Usuário adicionado com sucesso!");
@@ -82,8 +83,7 @@ public class UsuarioBean {
 	}
 
 	public void preparaParaAlterar(Usuario usuario) {
-		this.usuario = usuarioDao.carrega(usuario.getId()); // evita
-															// LazyInitializationException
+		this.usuario = usuarioDao.carrega(usuario.getId());
 		setState(ESTADO_DE_EDICAO);
 	}
 

@@ -1,6 +1,7 @@
 package br.com.bills.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 
 @Entity
 public class HistoricoAlteracao implements Serializable {
@@ -26,10 +28,18 @@ public class HistoricoAlteracao implements Serializable {
 	@JoinColumn(name = "ID_USUARIO", referencedColumnName = "id")
 	private Usuario usuario;
 
-	private Bill billAntiga;
+	private String operacao;
+	private String beneficiario;
+	private Double valor;
+	private String devedor;
+	private String motivo;
+	private Date data;
+	private String estado;
+	private Date ultimaAlteracao;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_BILL", referencedColumnName = "id")
+	@JoinColumn(name = "ID_BILL_ATUAL", referencedColumnName = "id")
+	@Transient
 	private Bill billAtual;
 
 	public int getId() {
@@ -48,12 +58,60 @@ public class HistoricoAlteracao implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public Bill getBillAntiga() {
-		return billAntiga;
+	public String getBeneficiario() {
+		return beneficiario;
 	}
 
-	public void setBillAntiga(Bill billAntiga) {
-		this.billAntiga = billAntiga;
+	public void setBeneficiario(String beneficiario) {
+		this.beneficiario = beneficiario;
+	}
+
+	public Double getValor() {
+		return valor;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
+
+	public String getDevedor() {
+		return devedor;
+	}
+
+	public void setDevedor(String devedor) {
+		this.devedor = devedor;
+	}
+
+	public String getMotivo() {
+		return motivo;
+	}
+
+	public void setMotivo(String motivo) {
+		this.motivo = motivo;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public Date getUltimaAlteracao() {
+		return ultimaAlteracao;
+	}
+
+	public void setUltimaAlteracao(Date ultimaAlteracao) {
+		this.ultimaAlteracao = ultimaAlteracao;
 	}
 
 	public Bill getBillAtual() {
@@ -62,6 +120,14 @@ public class HistoricoAlteracao implements Serializable {
 
 	public void setBillAtual(Bill billAtual) {
 		this.billAtual = billAtual;
+	}
+
+	public String getOperacao() {
+		return operacao;
+	}
+
+	public void setOperacao(String operacao) {
+		this.operacao = operacao;
 	}
 
 	@Override

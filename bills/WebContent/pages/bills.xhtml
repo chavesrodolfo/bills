@@ -18,6 +18,7 @@
 
 					<t:saveState value="#{billBean.bills}"/>
 					<t:saveState value="#{billBean.billsBalanceadasPorPessoa}"/>
+					<t:saveState value="#{billBean.todasBills}"/>
 					<t:saveState value="#{chartBean.pessoalModel}"/>
 					
 					<div style="float:right; margin-top: 0px;">
@@ -29,6 +30,11 @@
 					           		#{billBalanceada.beneficiario} <img src="${ctx}/resources/images/left.png" alt="Recebe" /> #{billBalanceada.valor}  #{billBalanceada.devedor}
 					            </div>
 				        	</p:dataList>
+				        	<div style="float:right;">
+					        	<h:commandLink action="#{billBean.prepararBills}">
+									<h:graphicImage library="images" name="refresh.png" alt="Atualizar"/>
+								</h:commandLink>
+				        	</div>
 						</p:panel>
 						<br/>
 						<p:panel header="Balanço Geral" toggleable="true" style="float: right; width: 250px;" rendered="false">
@@ -37,7 +43,7 @@
 						<p:panel header="Meu balanço" toggleable="true" style="float: right; width: 250px;">
 							<p:barChart id="basic" value="#{chartBean.pessoalModel}" legendPosition="ne"  
             					title="#{chartBean.situacaoPessoal()}" style="height:200px"/>
-            				<h:commandLink value="Relação Pagar/Receber" action="#{billBean.prepararRelatorio}"/>
+            				<center><h:commandLink value="Relação Pagar/Receber" action="#{billBean.prepararRelatorio}"/></center>
 						</p:panel>
 					</div>
 					
@@ -72,7 +78,7 @@
 										</h:outputText>
 									</f:facet>
 									<f:facet name="input">
-										<p:inputText value="#{item.valor}" style="width:100%" >
+										<p:inputText id="valor" value="#{item.valor}" style="width:100%" >
 										</p:inputText>
 									</f:facet>
 								</p:cellEditor>

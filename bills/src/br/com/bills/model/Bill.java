@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,7 +25,7 @@ public class Bill implements Serializable {
 	@SequenceGenerator(name = "SEQ_BILL", sequenceName = "SEQ_BILL", allocationSize = 1)
 	private int id;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "ID_USUARIO", referencedColumnName = "id")
 	private Usuario usuario;
 	private String beneficiario;
@@ -38,7 +37,7 @@ public class Bill implements Serializable {
 	private String estado;
 	private Date ultimaAlteracao;
 
-	@OneToMany(mappedBy = "billAtual", fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<HistoricoAlteracao> alteracoes;
 
 	public int getId() {

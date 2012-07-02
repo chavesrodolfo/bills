@@ -1,6 +1,7 @@
 package br.com.bills.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -27,6 +28,8 @@ public class Usuario implements Serializable {
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ID_PERFIL", referencedColumnName = "id")
 	private Perfil perfil;
+
+	private Date ultimoLogin;
 
 	public Long getId() {
 		return id;
@@ -66,6 +69,14 @@ public class Usuario implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Date getUltimoLogin() {
+		return ultimoLogin;
+	}
+
+	public void setUltimoLogin(Date ultimoLogin) {
+		this.ultimoLogin = ultimoLogin;
 	}
 
 	@Override

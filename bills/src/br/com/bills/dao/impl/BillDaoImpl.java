@@ -63,5 +63,4 @@ public class BillDaoImpl implements BillDao {
 				Bill.class)
 				.getResultList();
 	}
-
 }
