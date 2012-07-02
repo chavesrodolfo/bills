@@ -1,6 +1,5 @@
 package br.com.bills.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -43,8 +42,6 @@ public class LoginBean {
 		} else {
 			usuarioWeb.loga(usuario);
 			informativoBean.preparaInformativo();
-			usuario.setUltimoLogin(new Date());
-			usuarioDao.atualiza(usuario);
 			return "/pages/home.xhtml";
 		}
 

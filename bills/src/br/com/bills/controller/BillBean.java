@@ -124,9 +124,9 @@ public class BillBean {
 		if (selectedBills != null && selectedBills.length > 0) {
 			for (Bill conta : selectedBills) {
 				if (contaValidaPreenchida(conta)) {
-					conta.setEstado(BillsConstants.CONTA_INATIVA);
 					operacoesBill.gerarInformativoAlteracoes(conta, conta,
 							BillsConstants.OP_REMOVE, usuarioWeb.getUsuario());
+					conta.setEstado(BillsConstants.CONTA_INATIVA);
 					billDao.atualiza(conta);
 				} else {
 					msg = "Alguma conta selecionada não pode ser removida.";

@@ -2,16 +2,13 @@ package br.com.bills.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
@@ -36,9 +33,6 @@ public class Bill implements Serializable {
 	private Date data;
 	private String estado;
 	private Date ultimaAlteracao;
-
-	@OneToMany(fetch = FetchType.LAZY)
-	private List<HistoricoAlteracao> alteracoes;
 
 	public int getId() {
 		return id;
@@ -102,14 +96,6 @@ public class Bill implements Serializable {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
-	}
-
-	public List<HistoricoAlteracao> getAlteracoes() {
-		return alteracoes;
-	}
-
-	public void setAlteracoes(List<HistoricoAlteracao> alteracoes) {
-		this.alteracoes = alteracoes;
 	}
 
 	public Date getUltimaAlteracao() {
