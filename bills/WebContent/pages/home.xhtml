@@ -28,13 +28,13 @@
 						<p:dataList value="#{informativoBean.informativo}" 
 								var="informativo">  
 					            <div style="text-align: left;" >
-					           		<b>#{informativo.operacao}</b> efetuada por <b>#{informativo.usuario.login}</b><br/>
+					           		<b>#{informativo.operacao}</b> efetuada por <b>#{informativo.usuario.login}</b> em <h:outputText value="#{informativo.billAtual.ultimaAlteracao}"> <f:convertDateTime dateStyle="full"/></h:outputText><br/>
 					           		<b>Conta antiga</b><br/>
 						           		#{informativo.beneficiario} &lt;- #{informativo.valor} - #{informativo.motivo} - #{informativo.devedor} - 
-						           		registrado em #{informativo.data} - #{informativo.estado} - alterado em #{informativo.ultimaAlteracao}
+						           		#{informativo.estado} - registrado em <h:outputText value="#{informativo.billAtual.data}"> <f:convertDateTime dateStyle="medium"/></h:outputText>
 					           		<br/><b>Conta nova</b><br/>
 						           		#{informativo.billAtual.beneficiario} &lt;- #{informativo.billAtual.valor} - #{informativo.billAtual.motivo} - #{informativo.billAtual.devedor} - 
-						           		registrado em #{informativo.billAtual.data} - #{informativo.billAtual.estado} - alterado em #{informativo.billAtual.ultimaAlteracao}
+						           		#{informativo.billAtual.estado} - registrado em <h:outputText value="#{informativo.billAtual.data}"> <f:convertDateTime dateStyle="medium"/></h:outputText>
 						           	<br/><br/>
 					            </div>
 				        	</p:dataList>

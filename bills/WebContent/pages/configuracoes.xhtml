@@ -37,15 +37,6 @@
 					</div>
 					
 					<fieldset class="usuarios">
-						<h:outputText value="Auto Balance "/>
-						<p:selectBooleanButton onLabel="ON" onIcon="ui-icon-check" offLabel="OFF" offIcon="ui-icon-close" style="float: right;"/>  
-						<br/><br/>
-						<h:outputText value="Notificar atualizações"/>
-						<p:selectBooleanButton onLabel="ON" onIcon="ui-icon-check" offLabel="OFF" offIcon="ui-icon-close" style="float: right;"/>  
-						<br/>
-					</fieldset>
-					
-					<fieldset class="usuarios">
 						<legend><b>Novo usuário</b></legend>
 						<h:outputText value="usuário " />
 						<p:inputText label="login" value="#{usuarioBean.usuario.login}" required="true">
@@ -57,8 +48,8 @@
 						<p:password label="senha" value="#{usuarioBean.usuario.senha}" required="true" redisplay="true"/>
 						<h:outputText value="confirmação "/>
 						<p:password label="confirmação" value="#{usuarioBean.confirmacaoDeSenha}" required="true" />
-						<br/>
-						<b><h:commandLink value="adicionar" style="float: right; margin-right: 25px;" action="#{usuarioBean.adiciona}"/></b>
+						<br/><br/>
+						<b><h:commandButton value="adicionar" style="float: right; margin-right: 25px;" action="#{usuarioBean.adiciona}"/></b>
 					</fieldset>
 					<p:fileUpload label="Importar" fileUploadListener="#{importCSVBean.importar}"
 				            mode="advanced" auto="true" sizeLimit="2097152" allowTypes="/(\.|\/)(csv|xls|xlsx)$/"

@@ -48,7 +48,6 @@ public class UsuarioBean {
 	}
 
 	public void adiciona() {
-
 		boolean senhaInvalida = !confirmacaoDeSenha.equals(usuario.getSenha());
 		if (senhaInvalida) {
 			facesUtils

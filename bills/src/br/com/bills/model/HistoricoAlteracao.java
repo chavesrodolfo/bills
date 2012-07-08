@@ -3,6 +3,7 @@ package br.com.bills.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,7 +35,7 @@ public class HistoricoAlteracao implements Serializable {
 	private String estado;
 	private Date ultimaAlteracao;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Bill billAtual;
 
 	public int getId() {

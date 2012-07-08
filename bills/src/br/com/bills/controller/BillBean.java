@@ -70,7 +70,6 @@ public class BillBean {
 	public String prepararRelatorio() {
 		chartBean.gerarGraficoBarrasPessoal();
 		chartBean.gerarGraficoBarrasGeral();
-		// TODO chartBean.gerarGraficoLinhasGeral();
 		return "/pages/relatorio.xhtml";
 	}
 
@@ -104,7 +103,6 @@ public class BillBean {
 					billAlterada.setUltimaAlteracao(new Date());
 					operacoesBill.gerarInformativoAlteracoes(billOriginal,
 							billAlterada, BillsConstants.OP_UPDATE, usuarioWeb.getUsuario());
-					billDao.atualiza(billAlterada);
 				}
 			}
 		}

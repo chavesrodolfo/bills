@@ -22,7 +22,7 @@ public class InformativoDaoImpl implements InformativoDao {
 
 	@Override
 	public void registrarInformativoAlteracoes(HistoricoAlteracao informativo) {
-		entityManager.persist(informativo);
+		entityManager.merge(informativo);
 	}
 
 	@Override

@@ -1,22 +1,12 @@
 BUGS
 
 * ao dar update os caracteres especiais estao sendo alterados
-* listar informativo usado data no hql
-TODO - Services
-
-* registrar historico (ImportCSVBean.java)
 
 TODO
 
-* registrar modificacoes na tabela de alteracoes
 * widget Balanco Geral
 * filtros mensais e anual no historico
 * filtro no historico pela data selecionada no calendario
-* fazer grafico de linhas mensal e diario
-* Ligar e desligar autobalance na tela de configuracoes
-* notificar atualizacoes ao logar (home.xhtml)
-* ligar e desligar notificacao das atualizacoes para cada usuario (individual)
-
 
 MODULO 2
 
