@@ -14,7 +14,7 @@
 	<ui:define name="conteudo">
 		<div id="content" class="container-fluidMax">
 			<div class="container well">
-				<h1>Bills</h1>
+				<h1>Contas</h1>
 				<h:form id="form" onkeypress="return checkEnter(event)">
 
 					<t:saveState value="#{billBean.bills}"/>
@@ -115,7 +115,7 @@
 										<h:outputText value="#{item.data}" />
 									</f:facet>
 									<f:facet name="input">
-										<p:calendar value="#{item.data}" selectListener="#{billBean.setData}"
+										<p:calendar locale="pt" value="#{item.data}" selectListener="#{billBean.setData}"
 											style="width:10%;" pattern="#{msg['mascara.data.diaMesAno']}">
 										</p:calendar>
 									</f:facet>

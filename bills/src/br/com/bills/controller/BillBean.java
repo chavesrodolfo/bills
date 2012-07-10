@@ -80,8 +80,7 @@ public class BillBean {
 	}
 
 	public void adiciona() {
-		operacoesBill.gerarInformativoAlteracoes(bill, bill,
-				BillsConstants.OP_INSERT, usuarioWeb.getUsuario());
+		operacoesBill.gerarInformativoAlteracoes(bill, bill, BillsConstants.OP_INSERT, usuarioWeb.getUsuario());
 		billDao.salva(bill);
 	}
 
@@ -101,8 +100,8 @@ public class BillBean {
 				if ((!billOriginal.equalsValue(billAlterada))) {
 					billAlterada.setUsuario(usuarioWeb.getUsuario());
 					billAlterada.setUltimaAlteracao(new Date());
-					operacoesBill.gerarInformativoAlteracoes(billOriginal,
-							billAlterada, BillsConstants.OP_UPDATE, usuarioWeb.getUsuario());
+					operacoesBill.gerarInformativoAlteracoes(billOriginal, billAlterada, BillsConstants.OP_UPDATE,
+							usuarioWeb.getUsuario());
 				}
 			}
 		}
@@ -122,8 +121,8 @@ public class BillBean {
 		if (selectedBills != null && selectedBills.length > 0) {
 			for (Bill conta : selectedBills) {
 				if (contaValidaPreenchida(conta)) {
-					operacoesBill.gerarInformativoAlteracoes(conta, conta,
-							BillsConstants.OP_REMOVE, usuarioWeb.getUsuario());
+					operacoesBill.gerarInformativoAlteracoes(conta, conta, BillsConstants.OP_REMOVE,
+							usuarioWeb.getUsuario());
 					conta.setEstado(BillsConstants.CONTA_INATIVA);
 					billDao.atualiza(conta);
 				} else {
@@ -147,14 +146,10 @@ public class BillBean {
 	}
 
 	private boolean contaValidaPreenchida(Bill conta) {
-		if ((conta.getMotivo() != null && !conta.getMotivo().equals(
-				BillsConstants.EMPTY))
-				&& (conta.getBeneficiario() != null && !conta.getBeneficiario()
-						.equals(BillsConstants.EMPTY))
-				&& (conta.getDevedor() != null && !conta.getDevedor().equals(
-						BillsConstants.EMPTY))
-				&& (conta.getValor() != null && !conta.getValor().equals(
-						BillsConstants.EMPTY))) {
+		if ((conta.getMotivo() != null && !conta.getMotivo().equals(BillsConstants.EMPTY))
+				&& (conta.getBeneficiario() != null && !conta.getBeneficiario().equals(BillsConstants.EMPTY))
+				&& (conta.getDevedor() != null && !conta.getDevedor().equals(BillsConstants.EMPTY))
+				&& (conta.getValor() != null && !conta.getValor().equals(BillsConstants.EMPTY))) {
 			return true;
 		} else
 			return false;
@@ -166,8 +161,7 @@ public class BillBean {
 
 		for (Bill b : todasBills) {
 			if (b != null && b.getBeneficiario() != null) {
-				if (b.getBeneficiario().toLowerCase()
-						.startsWith(query.toLowerCase()))
+				if (b.getBeneficiario().toLowerCase().startsWith(query.toLowerCase()))
 					results.add(b.getBeneficiario());
 			}
 		}
@@ -181,8 +175,7 @@ public class BillBean {
 
 		for (Bill b : todasBills) {
 			if (b != null && b.getDevedor() != null) {
-				if (b.getDevedor().toLowerCase()
-						.startsWith(query.toLowerCase()))
+				if (b.getDevedor().toLowerCase().startsWith(query.toLowerCase()))
 					results.add(b.getDevedor());
 			}
 		}
@@ -231,42 +224,23 @@ public class BillBean {
 
 		for (Bill conta1 : contasBalanceadas) {
 			for (Bill conta2 : contasBalanceadas) {
-				if (contaValidaPreenchida(conta1)
-						&& contaValidaPreenchida(conta2)) {
+				if (contaValidaPreenchida(conta1) && contaValidaPreenchida(conta2)) {
 					/* caso o devedor de uma conta é o beneficiario da outra */
-					if (conta1.getDevedor().toLowerCase()
-							.equals(conta2.getBeneficiario().toLowerCase())
-							&& conta2
-									.getDevedor()
-									.toLowerCase()
-									.equals(conta1.getBeneficiario()
-											.toLowerCase())) {
+					if (conta1.getDevedor().toLowerCase().equals(conta2.getBeneficiario().toLowerCase())
+							&& conta2.getDevedor().toLowerCase().equals(conta1.getBeneficiario().toLowerCase())) {
 						if (conta1.getValor() > conta2.getValor()) {
-							if (conta2.getEstado().equals(
-									BillsConstants.CONTA_ATIVA)
-									&& conta1.getEstado().equals(
-											BillsConstants.CONTA_ATIVA)) {
-								conta1.setValor(conta1.getValor()
-										- conta2.getValor());
-								conta1.setMotivo(conta1.getMotivo() + " (-)"
-										+ conta2.getMotivo());
+							if (conta2.getEstado().equals(BillsConstants.CONTA_ATIVA)
+									&& conta1.getEstado().equals(BillsConstants.CONTA_ATIVA)) {
+								conta1.setValor(conta1.getValor() - conta2.getValor());
+								conta1.setMotivo(conta1.getMotivo() + " (-)" + conta2.getMotivo());
 								conta2.setEstado(BillsConstants.CONTA_INATIVA);
 							}
-						} else if (conta2.getDevedor().toLowerCase()
-								.equals(conta1.getBeneficiario().toLowerCase())
-								&& conta1
-										.getDevedor()
-										.toLowerCase()
-										.equals(conta2.getBeneficiario()
-												.toLowerCase())) {
-							if (conta1.getEstado().equals(
-									BillsConstants.CONTA_ATIVA)
-									&& conta2.getEstado().equals(
-											BillsConstants.CONTA_ATIVA)) {
-								conta2.setValor(conta2.getValor()
-										- conta1.getValor());
-								conta2.setMotivo(conta2.getMotivo() + " (-)"
-										+ conta1.getMotivo());
+						} else if (conta2.getDevedor().toLowerCase().equals(conta1.getBeneficiario().toLowerCase())
+								&& conta1.getDevedor().toLowerCase().equals(conta2.getBeneficiario().toLowerCase())) {
+							if (conta1.getEstado().equals(BillsConstants.CONTA_ATIVA)
+									&& conta2.getEstado().equals(BillsConstants.CONTA_ATIVA)) {
+								conta2.setValor(conta2.getValor() - conta1.getValor());
+								conta2.setMotivo(conta2.getMotivo() + " (-)" + conta1.getMotivo());
 								conta1.setEstado(BillsConstants.CONTA_INATIVA);
 							}
 						} else {
@@ -280,21 +254,12 @@ public class BillBean {
 						 * caso existam contas que tem o mesmo devedor e
 						 * beneficiario. e não é a mesma conta
 						 */
-						if (conta2.getBeneficiario().toLowerCase()
-								.equals(conta1.getBeneficiario().toLowerCase())
-								&& conta2
-										.getDevedor()
-										.toLowerCase()
-										.equals(conta1.getDevedor()
-												.toLowerCase())) {
-							if (conta2.getEstado().equals(
-									BillsConstants.CONTA_ATIVA)
-									&& conta1.getEstado().equals(
-											BillsConstants.CONTA_ATIVA)) {
-								conta1.setValor(conta1.getValor()
-										+ conta2.getValor());
-								conta1.setMotivo(conta1.getMotivo() + " (+)"
-										+ conta2.getMotivo());
+						if (conta2.getBeneficiario().toLowerCase().equals(conta1.getBeneficiario().toLowerCase())
+								&& conta2.getDevedor().toLowerCase().equals(conta1.getDevedor().toLowerCase())) {
+							if (conta2.getEstado().equals(BillsConstants.CONTA_ATIVA)
+									&& conta1.getEstado().equals(BillsConstants.CONTA_ATIVA)) {
+								conta1.setValor(conta1.getValor() + conta2.getValor());
+								conta1.setMotivo(conta1.getMotivo() + " (+)" + conta2.getMotivo());
 								conta2.setEstado(BillsConstants.CONTA_INATIVA);
 							}
 						}
@@ -402,8 +367,7 @@ public class BillBean {
 		return billsBalanceadasPorPessoa;
 	}
 
-	public void setBillsBalanceadasPorPessoa(
-			List<Bill> billsBalanceadasPorPessoa) {
+	public void setBillsBalanceadasPorPessoa(List<Bill> billsBalanceadasPorPessoa) {
 		this.billsBalanceadasPorPessoa = billsBalanceadasPorPessoa;
 	}
 

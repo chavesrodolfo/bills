@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/pages/template/template_padrao.xhtml"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:p="http://primefaces.org/ui">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+
+	<ui:define name="conteudo">
+		<div id="content" class="container-fluidMax">
+			<div class="container well">
+				<h1>Movimentações</h1>
+				<h:form id="form">
+					<t:saveState value="#{movimentacaoBean.eventoModel}" />
+					<t:saveState value="#{movimentacaoBean.evento}" />
+					<t:saveState value="#{movimentacaoBean.movimentacao}" />
+
+					<p:schedule id="calendario" value="#{movimentacaoBean.eventoModel}"
+						widgetVar="myschedule" locale="pt">
+
+						<p:ajax event="dateSelect"
+							listener="#{movimentacaoBean.onDateSelect}"
+							update="eventoDetails" oncomplete="eventoDialog.show()" />
+						<p:ajax event="eventSelect"
+							listener="#{movimentacaoBean.onEventSelect}"
+							update="eventoDetails" oncomplete="eventoDialog.show()" />
+						<p:ajax event="eventMove"
+							listener="#{movimentacaoBean.onEventMove}" />
+						<p:ajax event="eventResize"
+							listener="#{movimentacaoBean.onEventResize}" />
+
+					</p:schedule>
+
+					<p:dialog widgetVar="eventoDialog" header="Cadastro de Despesa"
+						showEffect="clip" hideEffect="clip">
+						<h:panelGrid id="eventoDetails" columns="2">
+							<h:outputLabel for="despesa" value="Despesa:" />
+							<p:inputText id="despesa"
+								value="#{movimentacaoBean.evento.title}" required="true" />
+							<h:outputLabel for="valor" value="Valor:" />
+							<p:inputText id="valor"
+								value="#{movimentacaoBean.movimentacao.valor}" required="true" />
+
+							<h:outputLabel for="categoria" value="Categoria:" />
+							<p:inputText id="categoria"
+								value="#{movimentacaoBean.movimentacao.categoria.nome}"
+								required="true" />
+
+							<h:outputLabel for="data" value="Data:" />
+							<p:calendar id="data" locale="pt"
+								value="#{movimentacaoBean.evento.endDate}"
+								pattern="#{msg['mascara.data.diaMesAno']}" />
+
+							<p:commandButton type="reset" value="Limpar" />
+							<p:commandButton value="Salvar"
+								actionListener="#{movimentacaoBean.addEvent}" update="calendario"
+								oncomplete="myschedule.update();eventoDialog.hide();" />
+						</h:panelGrid>
+					</p:dialog>
+				</h:form>
+
+			</div>
+		</div>
+	</ui:define>
+
+</ui:composition>

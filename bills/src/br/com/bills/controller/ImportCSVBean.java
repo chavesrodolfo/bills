@@ -65,7 +65,6 @@ public class ImportCSVBean {
 				bill.setUltimaAlteracao(new Date());
 				bill.setUsuario(usuarioWeb.getUsuario());
 				operacoesBill.gerarInformativoAlteracoes(bill, bill, BillsConstants.OP_INSERT, usuarioWeb.getUsuario());
-				billDao.salva(bill);
 			}
 			facesUtils
 					.adicionaMensagemDeInformacao("Dados importados com sucesso!");
