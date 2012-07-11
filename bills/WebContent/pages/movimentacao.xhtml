@@ -19,6 +19,7 @@
 					<t:saveState value="#{movimentacaoBean.eventoModel}" />
 					<t:saveState value="#{movimentacaoBean.evento}" />
 					<t:saveState value="#{movimentacaoBean.movimentacao}" />
+					<t:saveState value="#{movimentacaoBean.state}" />
 
 					<p:schedule id="calendario" value="#{movimentacaoBean.eventoModel}"
 						widgetVar="myschedule" locale="pt">
@@ -37,29 +38,33 @@
 					</p:schedule>
 
 					<p:dialog widgetVar="eventoDialog" header="Cadastro de Despesa"
-						showEffect="clip" hideEffect="clip">
+						showEffect="clip" hideEffect="clip" resizable="false">
 						<h:panelGrid id="eventoDetails" columns="2">
 							<h:outputLabel for="despesa" value="Despesa:" />
-							<p:inputText id="despesa"
+							<p:inputText id="despesa" style="width: 200px"
 								value="#{movimentacaoBean.evento.title}" required="true" />
 							<h:outputLabel for="valor" value="Valor:" />
 							<p:inputText id="valor"
-								value="#{movimentacaoBean.movimentacao.valor}" required="true" />
+								value="#{movimentacaoBean.movimentacao.valor}" required="true" >
+								<f:convertNumber pattern="€ #{msg['mascara.moeda']}"/>
+							</p:inputText>
 
 							<h:outputLabel for="categoria" value="Categoria:" />
-							<p:inputText id="categoria"
+							<p:autoComplete id="categoria"
 								value="#{movimentacaoBean.movimentacao.categoria.nome}"
-								required="true" />
+								required="true" 
+								completeMethod="#{movimentacaoBean.completeCategoria}" />
 
 							<h:outputLabel for="data" value="Data:" />
 							<p:calendar id="data" locale="pt"
 								value="#{movimentacaoBean.evento.endDate}"
 								pattern="#{msg['mascara.data.diaMesAno']}" />
+								<br/>	
+								<p:commandButton value="Salvar" style="float:right;"
+									actionListener="#{movimentacaoBean.addEvent}"
+									update="calendario"
+									oncomplete="myschedule.update();eventoDialog.hide();" />
 
-							<p:commandButton type="reset" value="Limpar" />
-							<p:commandButton value="Salvar"
-								actionListener="#{movimentacaoBean.addEvent}" update="calendario"
-								oncomplete="myschedule.update();eventoDialog.hide();" />
 						</h:panelGrid>
 					</p:dialog>
 				</h:form>

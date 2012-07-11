@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.bills.dao.MovimentacaoDao;
+import br.com.bills.model.Categoria;
 import br.com.bills.model.Movimentacao;
+import br.com.bills.util.Utils;
 
 @Repository("movimentacaoDao")
 @Transactional
@@ -26,7 +28,35 @@ public class MovimentacaoDaoImpl implements MovimentacaoDao {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Categoria> listarCategorias() {
+		return entityManager.createQuery("from Categoria", Categoria.class).getResultList();
+	}
+
+	@Override
 	public void salvar(Movimentacao movimentacao) {
+		List<Categoria> categoria = entityManager.createQuery(
+				"from Categoria where nome='" + movimentacao.getCategoria().getNome() + "'", Categoria.class)
+				.getResultList();
+		if (categoria.isEmpty()) {
+			entityManager.persist(movimentacao.getCategoria());
+			categoria = entityManager.createQuery(
+					"from Categoria where nome='" + movimentacao.getCategoria().getNome() + "'", Categoria.class)
+					.getResultList();
+			categoria.get(0).setNome(Utils.capitalize(categoria.get(0).getNome()));
+			movimentacao.setCategoria(categoria.get(0));
+			entityManager.persist(movimentacao);
+		} else {
+			categoria = entityManager.createQuery(
+					"from Categoria where nome='" + movimentacao.getCategoria().getNome() + "'", Categoria.class)
+					.getResultList();
+			movimentacao.setCategoria(categoria.get(0));
+			entityManager.merge(movimentacao);
+		}
+	}
+
+	@Override
+	public void atualizar(Movimentacao movimentacao) {
 		entityManager.merge(movimentacao);
 	}
 

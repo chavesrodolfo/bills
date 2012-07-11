@@ -3,7 +3,9 @@ package br.com.bills.controller;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -43,6 +45,14 @@ public class MovimentacaoBean {
 	private Movimentacao movimentacao = new Movimentacao();
 
 	private List<Movimentacao> movimentacoes = new ArrayList<Movimentacao>();
+
+	private List<Categoria> categorias = null;
+
+	private static final String ESTADO_DE_NOVO = "_novo";
+	private static final String ESTADO_DE_EDICAO = "_edicao";
+	private static final String ESTADO_DE_PESQUISA = "_pesquisa";
+
+	private String state = ESTADO_DE_PESQUISA;
 
 	public String prepararMovimentacao() {
 		movimentacao = new Movimentacao();
@@ -93,9 +103,35 @@ public class MovimentacaoBean {
 		movimentacao.setData(nextDay(evento.getEndDate()));
 		movimentacao.setDescricao(evento.getTitle());
 		movimentacao.setUsuario(usuarioWeb.getUsuario());
-		movimentacaoDao.salvar(movimentacao);
+		if (state.equals(ESTADO_DE_EDICAO)) {
+			movimentacaoDao.atualizar(movimentacao);
+		} else {
+			movimentacaoDao.salvar(movimentacao);
+		}
 	}
 
+	public List<String> completeCategoria(String query) {
+		Set<String> results = new HashSet<String>();
+		categorias = getTodasCategorias();
+
+		for (Categoria c : categorias) {
+			if (c != null && c.getNome() != null) {
+				if (c.getNome().toUpperCase().startsWith(query.toUpperCase()))
+					results.add(c.getNome());
+			}
+		}
+		List<String> resultsList = new ArrayList<String>(results);
+		return resultsList;
+	}
+
+	private List<Categoria> getTodasCategorias() {
+		if (categorias == null) {
+			categorias = movimentacaoDao.listarCategorias();
+		}
+		return categorias;
+	}
+
+	@SuppressWarnings("unused")
 	private void atualizarEvento(ScheduleEvent evento) {
 		Movimentacao mov = movimentacaoDao.carrega((Long) evento.getData());
 		mov.setData(evento.getStartDate());
@@ -109,9 +145,11 @@ public class MovimentacaoBean {
 		evento.setEditable(false);
 		evento.setData(movimentacao.getId());
 		evento.setTitle(movimentacao.getDescricao());
+		setState(ESTADO_DE_EDICAO);
 	}
 
 	public void onDateSelect(DateSelectEvent selectEvent) {
+		setState(ESTADO_DE_NOVO);
 		adicionarEvento(selectEvent.getDate());
 	}
 
@@ -190,6 +228,14 @@ public class MovimentacaoBean {
 
 	public void setUsuarioWeb(UsuarioWeb usuarioWeb) {
 		this.usuarioWeb = usuarioWeb;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 }
