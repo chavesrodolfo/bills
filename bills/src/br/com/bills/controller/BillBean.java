@@ -84,6 +84,11 @@ public class BillBean {
 		billDao.salva(bill);
 	}
 
+	public void excluirTodasContas() {
+		operacoesBill.excluirTodasContas();
+		facesUtils.adicionaMensagemDeInformacao("Todas as Contas foram removidas com sucesso!");
+	}
+
 	public void addLinhas() {
 		for (int i = 0; i < 5; i++) {
 			preparaParaAdicionar();

@@ -19,4 +19,6 @@ public interface BillDao {
 
 	public List<Bill> buscarContas(Usuario usuario);
 
+	public void excluirTodasContas();
+
 }

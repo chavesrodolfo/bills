@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.bills.dao.BillDao;
 import br.com.bills.dao.InformativoDao;
 import br.com.bills.model.Bill;
 import br.com.bills.model.HistoricoAlteracao;
@@ -14,10 +15,12 @@ import br.com.bills.model.Usuario;
 public class OperacoesBillImpl implements OperacoesBill {
 
 	private InformativoDao informativoDao;
+	private BillDao billDao;
 
 	@Autowired
-	public OperacoesBillImpl(InformativoDao informativoDao) {
+	public OperacoesBillImpl(InformativoDao informativoDao, BillDao billDao) {
 		this.informativoDao = informativoDao;
+		this.billDao = billDao;
 	}
 
 	@Override
@@ -35,6 +38,12 @@ public class OperacoesBillImpl implements OperacoesBill {
 		informativo.setBillAtual(billAtual);
 		informativo.setUsuario(usuario);
 		informativoDao.registrarInformativoAlteracoes(informativo);
+	}
+
+	@Override
+	public void excluirTodasContas() {
+		informativoDao.limparHistorico();
+		billDao.excluirTodasContas();
 	}
 
 }

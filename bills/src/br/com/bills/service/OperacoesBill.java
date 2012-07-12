@@ -5,7 +5,9 @@ import br.com.bills.model.Usuario;
 
 public interface OperacoesBill {
 
-	void gerarInformativoAlteracoes(Bill billAntiga, Bill billAtual,
+	public void gerarInformativoAlteracoes(Bill billAntiga, Bill billAtual,
 			String operacao, Usuario usuario);
+
+	public void excluirTodasContas();
 		
 }

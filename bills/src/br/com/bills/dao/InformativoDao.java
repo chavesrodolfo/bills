@@ -12,4 +12,6 @@ public interface InformativoDao {
 	public List<HistoricoAlteracao> carregarInformativoAlteracoes(
 			Usuario usuario);
 
+	public void limparHistorico();
+
 }

@@ -39,7 +39,7 @@ public class AcompanhamentoBean {
 		movimentacoes = movimentacaoDao.listarTodas(usuarioWeb.getUsuario());
 		categorias = movimentacaoDao.listarCategorias();
 		somarPorCategoriaGeral();
-		somarPorCategoriaMensal();
+		somarPorCategoriaMensal(Calendar.getInstance().get(Calendar.MONTH));
 		return "/pages/acompanhamento.xhtml";
 	}
 
@@ -61,7 +61,7 @@ public class AcompanhamentoBean {
 		}
 	}
 
-	private void somarPorCategoriaMensal() {
+	private void somarPorCategoriaMensal(int mes) {
 		pieModelMensal = new PieChartModel();
 
 		for (Categoria categoria : categorias) {
@@ -73,7 +73,7 @@ public class AcompanhamentoBean {
 				int mesMov = dataMov.get(Calendar.MONTH);
 
 				if (categoria.getNome().equals(movimentacao.getCategoria().getNome())
-						&& Calendar.getInstance().get(Calendar.MONTH) == mesMov) {
+ && mes == mesMov) {
 					soma += movimentacao.getValor();
 				}
 			}

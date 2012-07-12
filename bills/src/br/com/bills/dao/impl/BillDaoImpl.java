@@ -63,4 +63,12 @@ public class BillDaoImpl implements BillDao {
 				Bill.class)
 				.getResultList();
 	}
+
+	@Override
+	public void excluirTodasContas() {
+		List<Bill> contas = listaTudo();
+		for (Bill bill : contas) {
+			entityManager.remove(bill);
+		}
+	}
 }

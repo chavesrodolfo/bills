@@ -50,7 +50,7 @@
 					
 					<div style="float:left; width:840px;">
 						<p:dataTable var="item" value="#{billBean.bills}" id="billList"  emptyMessage="#{msg.dataTableEmpty}"
-							editable="true" paginator="true" first="9999" paginatorPosition="bottom"
+							editable="true" paginator="true" paginatorPosition="bottom"
 							selection="#{billBean.selectedBills}" rowKey="#{item.id}" 
 							paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
 							rows="10" rowsPerPageTemplate="10,50,100"> 
