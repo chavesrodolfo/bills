@@ -4,10 +4,11 @@ import java.util.List;
 
 import br.com.bills.model.Categoria;
 import br.com.bills.model.Movimentacao;
+import br.com.bills.model.Usuario;
 
 public interface MovimentacaoDao {
 
-	public List<Movimentacao> listarTodas();
+	public List<Movimentacao> listarTodas(Usuario usuario);
 
 	public void salvar(Movimentacao movimentacao);
 

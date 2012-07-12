@@ -19,10 +19,11 @@
 			                    <ul class="nav">
 			                       <li><h:commandLink value="Home" action="#{informativoBean.preparaInformativo}"/></li>
 								<li><h:commandLink value="Movimentações" action="#{movimentacaoBean.prepararMovimentacao}"/></li>
-								<li><h:commandLink value="Acompanhamento" action="#{billBean.prepararBills}"/></li>
+								<li><h:commandLink value="Acompanhamento" action="#{acompanhamentoBean.prepararAcompanhamento}"/></li>
 								<li><h:commandLink value="Contas" action="#{billBean.prepararBills}"/></li>
 								<li><h:commandLink value="Histórico de Contas" action="#{billBean.prepararHistorico}"/></li>
 								<li><h:commandLink value="Relatório de Contas" action="#{billBean.prepararRelatorio}"/></li>
+								<li><h:commandLink value="Grupos" action="#{configBean.preparaConfiguracoes}"/></li>
 								<li><h:commandLink value="Configurações" action="#{configBean.preparaConfiguracoes}" rendered="#{usuarioWeb.administrador}"/></li>
 								<li><h:commandLink value="Sair" action="#{loginBean.sair}"/></li>
 			                    </ul>

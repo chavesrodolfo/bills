@@ -73,7 +73,7 @@ public class MovimentacaoBean {
 	}
 
 	private void listaMovimentacoes() {
-		movimentacoes = movimentacaoDao.listarTodas();
+		movimentacoes = movimentacaoDao.listarTodas(usuarioWeb.getUsuario());
 		eventoModel = new DefaultScheduleModel();
 		eventoModel = new DefaultScheduleModel();
 		for (Movimentacao mov : movimentacoes) {

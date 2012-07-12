@@ -1,6 +1,5 @@
 package br.com.bills.controller;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -16,6 +15,7 @@ import br.com.bills.controller.util.FacesUtils;
 import br.com.bills.dao.BillDao;
 import br.com.bills.model.Bill;
 import br.com.bills.service.OperacoesBill;
+import br.com.bills.util.Utils;
 
 @ManagedBean
 @RequestScoped
@@ -270,8 +270,7 @@ public class BillBean {
 
 		for (Bill conta : contasBalanceadas) {
 			if (conta.getEstado().equals(BillsConstants.CONTA_ATIVA)) {
-				DecimalFormat twoDForm = new DecimalFormat("0.00");
-				conta.setValor(Double.valueOf(twoDForm.format(conta.getValor())));
+				conta.setValor(Utils.precision(conta.getValor()));
 				toReturn.add(conta);
 			}
 		}

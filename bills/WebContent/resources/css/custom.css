@@ -83,10 +83,9 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
     width: auto;
 }
 
-
 /* Navbar */
 .navbar {
-    width:940px;
+    width:1000px;
     margin:0 auto;
 }
 .navbar-inner {

@@ -7,7 +7,3 @@ TODO
 * widget Balanco Geral
 * filtros mensais e anual no historico
 * filtro no historico pela data selecionada no calendario
-
-MODULO 2
-
-* Elaborar planejamento de contas

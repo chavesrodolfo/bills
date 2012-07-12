@@ -104,4 +104,13 @@
 		<filter-name>PrimeFaces FileUpload Filter</filter-name>
 		<servlet-name>Faces Servlet</servlet-name>
 	</filter-mapping>
+	 <context-param>
+        <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+        <param-value>6LcE59MSAAAAAOFSCO0JoickfSKnGiuY3LxMd054</param-value>
+    </context-param>
+ 
+    <context-param>
+        <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+        <param-value>6LcE59MSAAAAACe5HtXhztXHcsuIfAckHM4sK2Xm</param-value>
+    </context-param>
 </web-app>

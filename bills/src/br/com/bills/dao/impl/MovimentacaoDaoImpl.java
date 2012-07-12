@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.bills.dao.MovimentacaoDao;
 import br.com.bills.model.Categoria;
 import br.com.bills.model.Movimentacao;
+import br.com.bills.model.Usuario;
 import br.com.bills.util.Utils;
 
 @Repository("movimentacaoDao")
@@ -23,8 +24,9 @@ public class MovimentacaoDaoImpl implements MovimentacaoDao {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Movimentacao> listarTodas() {
-		return entityManager.createQuery("from Movimentacao", Movimentacao.class).getResultList();
+	public List<Movimentacao> listarTodas(Usuario usuario) {
+		return entityManager.createQuery("from Movimentacao where usuario=" + usuario.getId(), Movimentacao.class)
+				.getResultList();
 	}
 
 	@Override
@@ -39,6 +41,7 @@ public class MovimentacaoDaoImpl implements MovimentacaoDao {
 				"from Categoria where nome='" + movimentacao.getCategoria().getNome() + "'", Categoria.class)
 				.getResultList();
 		if (categoria.isEmpty()) {
+			movimentacao.getCategoria().setNome(Utils.capitalize(movimentacao.getCategoria().getNome()));
 			entityManager.persist(movimentacao.getCategoria());
 			categoria = entityManager.createQuery(
 					"from Categoria where nome='" + movimentacao.getCategoria().getNome() + "'", Categoria.class)
@@ -57,7 +60,25 @@ public class MovimentacaoDaoImpl implements MovimentacaoDao {
 
 	@Override
 	public void atualizar(Movimentacao movimentacao) {
-		entityManager.merge(movimentacao);
+		List<Categoria> categoria = entityManager.createQuery(
+				"from Categoria where nome='" + movimentacao.getCategoria().getNome() + "'", Categoria.class)
+				.getResultList();
+		if (categoria.isEmpty()) {
+			Categoria novaCategoria = new Categoria();
+			novaCategoria.setNome(Utils.capitalize(movimentacao.getCategoria().getNome()));
+			entityManager.persist(novaCategoria);
+			categoria = entityManager.createQuery(
+					"from Categoria where nome='" + movimentacao.getCategoria().getNome() + "'", Categoria.class)
+					.getResultList();
+			movimentacao.setCategoria(categoria.get(0));
+			entityManager.merge(movimentacao);
+		} else {
+			categoria = entityManager.createQuery(
+					"from Categoria where nome='" + movimentacao.getCategoria().getNome() + "'", Categoria.class)
+					.getResultList();
+			movimentacao.setCategoria(categoria.get(0));
+			entityManager.merge(movimentacao);
+		}
 	}
 
 	@Override

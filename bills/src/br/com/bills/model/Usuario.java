@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
@@ -22,12 +23,19 @@ public class Usuario implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_USUARIO")
 	@SequenceGenerator(name = "SEQ_USUARIO", sequenceName = "SEQ_USUARIO", allocationSize = 1)
 	private Long id;
+
 	private String login;
 	private String senha;
 	private String email;
+
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "ID_PERFIL", referencedColumnName = "id")
 	private Perfil perfil;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ID_GRUPO", referencedColumnName = "id")
+	private Grupo grupo;
+
 
 	private Date ultimoLogin;
 
@@ -77,6 +85,14 @@ public class Usuario implements Serializable {
 
 	public void setUltimoLogin(Date ultimoLogin) {
 		this.ultimoLogin = ultimoLogin;
+	}
+
+	public Grupo getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
 	}
 
 	@Override

@@ -1,7 +1,6 @@
 package br.com.bills.controller;
 
 import java.io.Serializable;
-import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -13,13 +12,13 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.ItemSelectEvent;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
-import org.primefaces.model.chart.PieChartModel;
 
 import br.com.bills.controller.util.BillsConstants;
 import br.com.bills.dao.BillDao;
 import br.com.bills.dao.UsuarioDao;
 import br.com.bills.model.Bill;
 import br.com.bills.model.Usuario;
+import br.com.bills.util.Utils;
 
 @ManagedBean
 @RequestScoped
@@ -32,8 +31,6 @@ public class ChartBean implements Serializable {
 	private CartesianChartModel pessoalModel;
 	private CartesianChartModel geralModel;
 	private CartesianChartModel linearModel;
-
-	private PieChartModel pieModel;
 
 	@ManagedProperty("#{billDao}")
 	private BillDao billDao;
@@ -48,7 +45,6 @@ public class ChartBean implements Serializable {
 
 	private Double contasPagar = null;
 	private Double contasReceber = null;
-	private DecimalFormat twoDForm = new DecimalFormat("0.00");
 
 	public void gerarGraficoBarrasPessoal() {
 		pessoalModel = new CartesianChartModel();
@@ -56,11 +52,11 @@ public class ChartBean implements Serializable {
 
 		ChartSeries receber = new ChartSeries();
 		receber.setLabel("Receber");
-		receber.set("Balanço", Double.valueOf(twoDForm.format(contasReceber)));
+		receber.set("Balanço", Utils.precision(contasReceber));
 
 		ChartSeries pagar = new ChartSeries();
 		pagar.setLabel("Pagar");
-		pagar.set("Balanço", Double.valueOf(twoDForm.format(contasPagar)));
+		pagar.set("Balanço", Utils.precision(contasPagar));
 
 		pessoalModel.addSeries(receber);
 		pessoalModel.addSeries(pagar);
@@ -77,11 +73,8 @@ public class ChartBean implements Serializable {
 		for (Usuario usuario : todosUsuarios) {
 			if (!usuario.getLogin().equals(BillsConstants.USER_ADMIN)) {
 				somarContas(usuario);
-				receber.set(
-						usuario.getLogin() + " " + situacaoPessoal(usuario),
-						Double.valueOf(twoDForm.format(contasReceber)));
-				pagar.set(usuario.getLogin() + " " + situacaoPessoal(usuario),
-						Double.valueOf(twoDForm.format(contasPagar)));
+				receber.set(usuario.getLogin() + " " + situacaoPessoal(usuario), Utils.precision(contasReceber));
+				pagar.set(usuario.getLogin() + " " + situacaoPessoal(usuario), Utils.precision(contasPagar));
 			}
 		}
 		geralModel.addSeries(receber);
@@ -100,10 +93,8 @@ public class ChartBean implements Serializable {
 				pagar.setLabel(usuario.getLogin());
 				// for para todas as datas
 				somarContas(usuario);
-				receber.set(usuario.getLogin(),
-						Double.valueOf(twoDForm.format(contasReceber)));
-				pagar.set(usuario.getLogin(),
-						Double.valueOf(twoDForm.format(contasPagar)));
+				receber.set(usuario.getLogin(), Utils.precision(contasReceber));
+				pagar.set(usuario.getLogin(), Utils.precision(contasPagar));
 				// fim for
 
 				geralModel.addSeries(receber);
@@ -119,11 +110,9 @@ public class ChartBean implements Serializable {
 		contasPagar = new Double(0);
 		for (Bill bill : bills) {
 			if (bill.getEstado().equals(BillsConstants.CONTA_ATIVA)) {
-				if (bill.getBeneficiario().toLowerCase()
-						.equals(usuario.getLogin().toLowerCase())) {
+				if (bill.getBeneficiario().toLowerCase().equals(usuario.getLogin().toLowerCase())) {
 					contasReceber += bill.getValor();
-				} else if (bill.getDevedor().toLowerCase()
-						.equals(usuario.getLogin().toLowerCase())) {
+				} else if (bill.getDevedor().toLowerCase().equals(usuario.getLogin().toLowerCase())) {
 					contasPagar += bill.getValor();
 				}
 			}
@@ -133,43 +122,30 @@ public class ChartBean implements Serializable {
 	public String situacaoPessoal(Usuario usuario) {
 		somarContas(usuario);
 		if (contasPagar > contasReceber) {
-			return ("$"
-					+ Double.valueOf(twoDForm.format(contasPagar
-							- contasReceber)) + " Em Débito").replace('.', ',');
+			return ("$" + Utils.precision(contasPagar - contasReceber)) + " Em Débito".replace('.', ',');
 		} else {
-			return ("$"
-					+ Double.valueOf(twoDForm.format(contasReceber
-							- contasPagar)) + " Em Crédito").replace('.', ',');
+			return ("$" + Utils.precision(contasReceber - contasPagar) + " Em Crédito").replace('.', ',');
 		}
 	}
 
 	public String situacaoPessoal() {
 		somarContas(usuarioWeb.getUsuario());
 		if (contasPagar > contasReceber) {
-			return ("$"
-					+ Double.valueOf(twoDForm.format(contasPagar
-							- contasReceber)) + " Em Débito").replace('.', ',');
+			return ("$" + Utils.precision(contasPagar - contasReceber) + " Em Débito").replace('.', ',');
 		} else {
-			return ("$"
-					+ Double.valueOf(twoDForm.format(contasReceber
-							- contasPagar)) + " Em Crédito").replace('.', ',');
+			return ("$" + Utils.precision(contasReceber - contasPagar) + " Em Crédito").replace('.', ',');
 		}
 	}
 
 	public void itemSelect(ItemSelectEvent event) {
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-				"Item selected", "Item Index: " + event.getItemIndex()
-						+ ", Series Index:" + event.getSeriesIndex());
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Item selected", "Item Index: "
+				+ event.getItemIndex() + ", Series Index:" + event.getSeriesIndex());
 
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 	public CartesianChartModel getCategoryModel() {
 		return categoryModel;
-	}
-
-	public PieChartModel getPieModel() {
-		return pieModel;
 	}
 
 	public CartesianChartModel getPessoalModel() {

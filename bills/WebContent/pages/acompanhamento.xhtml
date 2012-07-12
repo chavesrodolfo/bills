@@ -14,8 +14,46 @@
 		<div id="content" class="container-fluidMax">
 			<div class="container well">
 				<h1>Acompanhamento</h1>
+				<br/>
 				<h:form id="form">
-					<p:schedule locale="pt" />
+					<p:dataList value="#{acompanhamentoBean.categorias}" var="cat">
+					#{cat.nome}: € #{cat.total}
+				</p:dataList>
+				<br/>
+					<p:menubar style="width: 99%;">  
+				       <p:submenu label="Ano" icon="ui-icon-calendar">  
+				            <p:menuitem value="2012" url="#" />  
+				            <p:menuitem value="2013" url="#" />  
+				            <p:menuitem value="2014" url="#" />  
+				            <p:menuitem value="2015" url="#" />  
+				            <p:separator />  
+				            <p:menuitem value="Todos" url="#" />  
+				        </p:submenu>  
+				       <p:menuitem value="janeiro" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="fevereiro" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="março" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="abril" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="maio" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="junho" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="julho" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="agosto" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="setembro" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="outubro" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="novembro" url="#" icon="ui-icon-carat-1-s" /> 
+				       <p:menuitem value="dezembro" url="#" icon="ui-icon-carat-1-s" /> 
+			        </p:menubar>
+					<br/><br/><br/>
+					<div style="float:right; margin-top: 0px;">
+						<p:pieChart value="#{acompanhamentoBean.pieModel}"
+							legendPosition="w" title="Geral"
+							style="width:480px;height:400px" />
+					</div>
+					<div style="float:left; margin-top: 0px;">
+						<p:pieChart value="#{acompanhamentoBean.pieModelMensal}"
+							legendPosition="w" title="Mensal"
+							style="width:480px;height:400px" />
+					</div>
+					
 				</h:form>
 
 			</div>

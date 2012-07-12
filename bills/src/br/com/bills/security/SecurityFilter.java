@@ -20,6 +20,7 @@ public class SecurityFilter implements Filter {
 
 	private static final String LOGIN_PAGE = "/pages/login.xhtml";
 	private static final String INDEX_PAGE = "/pages/index.xhtml";
+	private static final String REGISTRO_PAGE = "/pages/registro.xhtml";
 	private static final String FAQ_PAGE = "/pages/faq.xhtml";
 	private static final String HOME_PAGE = "/index.jsp";
 	private static final String FACES_RESOURCES = "/javax.faces.resource";
@@ -58,6 +59,7 @@ public class SecurityFilter implements Filter {
 				|| path.startsWith(FACES_RESOURCES)
 				|| path.equals(HOME_PAGE)
 				|| path.equals(INDEX_PAGE)
+				|| path.equals(REGISTRO_PAGE)
 				|| path.contains(IMG_PNG) || path.contains(CSS);
 	}
 

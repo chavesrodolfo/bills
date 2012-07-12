@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 
 @Entity
 public class Categoria implements Serializable {
@@ -19,6 +20,9 @@ public class Categoria implements Serializable {
 	private int id;
 
 	private String nome;
+
+	@Transient
+	private double total;
 
 	public int getId() {
 		return id;
@@ -34,6 +38,14 @@ public class Categoria implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public double getTotal() {
+		return total;
+	}
+
+	public void setTotal(double total) {
+		this.total = total;
 	}
 
 	@Override
