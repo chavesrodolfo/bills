@@ -86,13 +86,15 @@
 				</h:form>
 				<div style="float: right; margin-top: -18px;">
 					<h:form>
+					<p:tooltip for="login" style="width: 300px; color : #FFF; background-color : #777;" showEvent="focus" hideEvent="blur" hideEffect="slide"
+								value="O login do usuário servirá para fazer a relação com as contas registradas neste mesmo nome inserido neste campo" />
 						<fieldset class="usuarios">
 							<legend>
 								<b>Novo usuário</b>
 							</legend>
 							<h:panelGrid columns="2">
 								<h:outputText value="usuário: " />
-								<p:inputText label="login" value="#{usuarioBean.usuario.login}"
+								<p:inputText id="login" label="login" value="#{usuarioBean.usuario.login}"
 									required="true">
 									<f:validateLength minimum="3" />
 								</p:inputText>

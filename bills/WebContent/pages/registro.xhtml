@@ -22,13 +22,15 @@
 							<h:panelGrid columns="2">
 								Usuário: <h:inputText/>
 								Senha: <h:inputSecret/>
-								Email: <h:inputSecret/>
-								Grupo*:<h:inputText/>
+								Confirmação: <h:inputSecret/>
+								Email: <h:inputText/>
+								Grupo:<h:inputText id="grupo"/>
 							</h:panelGrid>
 							<p:captcha theme="white" validatorMessage="O valor digitado está incorreto!"
 				                   requiredMessage="O captcha deve ser preenchido!"/>
 							<br />
-							* O grupo será usado para o módulo de balanceamento de contas (Pagar/Receber).
+							<p:tooltip for="grupo" style="width: 300px; color : #FFF; background-color : #777;" showEvent="focus" hideEvent="blur" hideEffect="slide"
+								value="O grupo será usado para o módulo de balanceamento de contas (Pagar/Receber)" />
 							<br/><br/>
 							<h:commandLink styleClass="btn btn-primary" value="Finalizar Cadastro" />
 						</div>
