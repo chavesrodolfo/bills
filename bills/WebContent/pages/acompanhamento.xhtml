@@ -17,7 +17,10 @@
 				<br/>
 				<h:form id="form">
 					<p:dataList value="#{acompanhamentoBean.categorias}" var="cat">
-					#{cat.nome}: € #{cat.total}
+					#{cat.nome}:
+					<h:outputText value="#{cat.total}">
+						<f:convertNumber pattern="R$ #{msg['mascara.moeda']}"/>
+					</h:outputText>
 				</p:dataList>
 				<br/>
 					<p:menubar style="width: 99%;">  

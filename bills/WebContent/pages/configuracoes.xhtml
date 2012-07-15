@@ -24,8 +24,9 @@
 					<h1>Configurações</h1>
 
 					<t:saveState value="#{usuarioBean.usuarios}" />
+					<t:saveState value="#{usuarioBean.usuariosListModel}" />
 
-					<div style="float: right; margin-top: -20px;">
+					<div style="float: left; margin-left: 0px;">
 						<fieldset class="usuarios">
 							<legend>
 								<b>Usuários</b>
@@ -42,39 +43,86 @@
 								</p:column>
 							</p:dataList>
 						</fieldset>
-						
-						<p:commandLink value="Excluir todas contas registradas"
-								onclick="confirmation.show()" type="button" immediate="true"/>
-					</div>
 
+						<!-- Grupos  -->
+						<fieldset class="usuarios">
+							<legend>
+								<b>Grupos</b>
+							</legend>
+							<p:dataList value="#{usuarioBean.usuarios}" var="usuario"
+								styleClass="listUsuario">
+								<p:column>
+									<h:outputText value="#{usuario.login} " />
+									<h:commandLink value="remover" style="float: right;"
+										immediate="true">
+										<f:setPropertyActionListener target="#{usuarioBean.usuario}"
+											value="#{usuario}" />
+									</h:commandLink>
+								</p:column>
+							</p:dataList>
+							<p:pickList value="#{usuarioBean.usuariosListModel}"
+								var="usuario" itemLabel="#{usuario.login}"
+								itemValue="#{usuario}" converter="usuarioConverter">
+								<f:facet name="sourceCaption">Usuários disponíveis</f:facet>
+								<f:facet name="targetCaption">Usuários do grupo</f:facet>
+							</p:pickList>
+						</fieldset>
+
+						<br />
+
+						<p:commandButton value="Excluir todas contas registradas"
+							onclick="confirmation.show()" type="button" immediate="true" />
+
+						<br /> <br />
+						<h:outputText
+							value="Para importar a planilha de contas arraste e solte na área abaixo" />
+						<p:fileUpload label="add"
+							fileUploadListener="#{importCSVBean.importar}" mode="advanced"
+							auto="true" sizeLimit="2097152" allowTypes="/(\.|\/)(csv|CSV)$/"
+							invalidFileMessage="Extensão inválida"
+							invalidSizeMessage="Tamanho máximo de 2MB" dragDropSupport="true" />
+
+					</div>
+				</h:form>
+				<div style="float: right; margin-top: -18px;">
+					<h:form>
+						<fieldset class="usuarios">
+							<legend>
+								<b>Novo usuário</b>
+							</legend>
+							<h:panelGrid columns="2">
+								<h:outputText value="usuário: " />
+								<p:inputText label="login" value="#{usuarioBean.usuario.login}"
+									required="true">
+									<f:validateLength minimum="3" />
+								</p:inputText>
+								<h:outputText value="email: " />
+								<p:inputText label="email" value="#{usuarioBean.usuario.email}"
+									required="true" />
+								<h:outputText value="senha: " />
+								<p:password label="senha" value="#{usuarioBean.usuario.senha}"
+									required="true" redisplay="true" />
+								<h:outputText value="confirmação: " />
+								<p:password label="confirmação"
+									value="#{usuarioBean.confirmacaoDeSenha}" required="true" />
+							</h:panelGrid>
+							<br /> <br /> <b><h:commandButton value="adicionar"
+									action="#{usuarioBean.adiciona}" /></b>
+						</fieldset>
+					</h:form>
+				<h:form>
 					<fieldset class="usuarios">
 						<legend>
-							<b>Novo usuário</b>
+							<b>Novo Grupo</b>
 						</legend>
-						<h:outputText value="usuário " />
-						<p:inputText label="login" value="#{usuarioBean.usuario.login}"
-							required="true">
-							<f:validateLength minimum="3" />
-						</p:inputText>
-						<h:outputText value="email " />
-						<p:inputText label="email" value="#{usuarioBean.usuario.email}"
-							required="true" />
-						<h:outputText value="senha " />
-						<p:password label="senha" value="#{usuarioBean.usuario.senha}"
-							required="true" redisplay="true" />
-						<h:outputText value="confirmação " />
-						<p:password label="confirmação"
-							value="#{usuarioBean.confirmacaoDeSenha}" required="true" />
+						<h:panelGrid columns="2">
+							<h:outputText value="grupo: " />
+							<p:inputText label="Grupo" value="" required="true" />
+						</h:panelGrid>
+
 						<br /> <br /> <b><h:commandButton value="adicionar"
-								style="float: right; margin-right: 25px;"
 								action="#{usuarioBean.adiciona}" /></b>
 					</fieldset>
-					<p:fileUpload label="Importar"
-						fileUploadListener="#{importCSVBean.importar}" mode="advanced"
-						auto="true" sizeLimit="2097152"
-						allowTypes="/(\.|\/)(csv|CSV)$/"
-						invalidFileMessage="Extensão inválida"
-						invalidSizeMessage="Tamanho máximo de 2MB" dragDropSupport="true" />
 
 					<p:confirmDialog id="confirmDialog"
 						message="Esta operação irá remover todos os registros de contas ativas e inativas. Confirma esta operação?"
@@ -83,14 +131,16 @@
 
 						<p:commandButton id="confirm" value="Sim"
 							oncomplete="confirmation.hide()"
-							actionListener="#{billBean.excluirTodasContas}" immediate="true"/>
+							actionListener="#{billBean.excluirTodasContas}" immediate="true" />
 						<p:commandButton id="decline" value="Não"
-							onclick="confirmation.hide()" type="button" immediate="true"/>
+							onclick="confirmation.hide()" type="button" immediate="true" />
 
 					</p:confirmDialog>
-
 				</h:form>
 			</div>
+
+
+		</div>
 		</div>
 
 		<style type="text/css">

@@ -56,7 +56,8 @@ public class AcompanhamentoBean {
 			}
 			categoria.setTotal(categoria.getTotal() + Utils.precision(soma));
 			if (categoria.getTotal() > 0) {
-				pieModel.set(categoria.getNome() + ": € " + categoria.getTotal(), categoria.getTotal());
+				pieModel.set(categoria.getNome() + ": $ " + Utils.formatarReal(categoria.getTotal()),
+						categoria.getTotal());
 			}
 		}
 	}
@@ -79,7 +80,8 @@ public class AcompanhamentoBean {
 			}
 			categoria.setTotal(categoria.getTotal() + Utils.precision(soma));
 			if (categoria.getTotal() > 0) {
-				pieModelMensal.set(categoria.getNome() + ": € " + categoria.getTotal(), categoria.getTotal());
+				pieModelMensal.set(categoria.getNome() + ": $ " + Utils.formatarReal(categoria.getTotal()),
+						categoria.getTotal());
 			}
 		}
 	}

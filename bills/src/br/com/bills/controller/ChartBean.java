@@ -122,18 +122,18 @@ public class ChartBean implements Serializable {
 	public String situacaoPessoal(Usuario usuario) {
 		somarContas(usuario);
 		if (contasPagar > contasReceber) {
-			return ("$" + Utils.precision(contasPagar - contasReceber)) + " Em Débito".replace('.', ',');
+			return Utils.formatarReal(contasPagar - contasReceber) + " Em Débito";
 		} else {
-			return ("$" + Utils.precision(contasReceber - contasPagar) + " Em Crédito").replace('.', ',');
+			return Utils.formatarReal(contasReceber - contasPagar) + " Em Crédito";
 		}
 	}
 
 	public String situacaoPessoal() {
 		somarContas(usuarioWeb.getUsuario());
 		if (contasPagar > contasReceber) {
-			return ("$" + Utils.precision(contasPagar - contasReceber) + " Em Débito").replace('.', ',');
+			return Utils.formatarReal(contasPagar - contasReceber) + " Em Débito";
 		} else {
-			return ("$" + Utils.precision(contasReceber - contasPagar) + " Em Crédito").replace('.', ',');
+			return Utils.formatarReal(contasReceber - contasPagar) + " Em Crédito";
 		}
 	}
 

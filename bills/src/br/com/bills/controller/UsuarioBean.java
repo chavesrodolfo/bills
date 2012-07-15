@@ -8,6 +8,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
+import org.primefaces.model.DualListModel;
+
 import br.com.bills.controller.util.BillsConstants;
 import br.com.bills.controller.util.FacesUtils;
 import br.com.bills.dao.PerfilDao;
@@ -22,6 +24,9 @@ public class UsuarioBean {
 	private Usuario usuario = new Usuario();
 	private String confirmacaoDeSenha;
 	private List<Usuario> usuarios = new ArrayList<Usuario>();
+	private DualListModel<Usuario> usuariosListModel;
+	private List<Usuario> usuariosSource = new ArrayList<Usuario>();
+	private List<Usuario> usuariosTarget = new ArrayList<Usuario>();
 
 	private static final String ESTADO_DE_NOVO = "_novo";
 	private static final String ESTADO_DE_EDICAO = "_edicao";
@@ -38,6 +43,8 @@ public class UsuarioBean {
 
 	public void lista() {
 		usuarios = usuarioDao.listaTudo();
+		usuariosSource.addAll(usuarios);
+		usuariosListModel = new DualListModel<Usuario>(usuariosSource, usuariosTarget);
 		setState(ESTADO_DE_PESQUISA);
 	}
 
@@ -50,8 +57,7 @@ public class UsuarioBean {
 	public void adiciona() {
 		boolean senhaInvalida = !confirmacaoDeSenha.equals(usuario.getSenha());
 		if (senhaInvalida) {
-			facesUtils
-					.adicionaMensagemDeErro("Senha e confirmação de senha não conferem.");
+			facesUtils.adicionaMensagemDeErro("Senha e confirmação de senha não conferem.");
 			return;
 		}
 
@@ -69,15 +75,13 @@ public class UsuarioBean {
 		}
 		usuario.setUltimoLogin(new Date());
 		usuarioDao.salva(usuario);
-		facesUtils
-				.adicionaMensagemDeInformacao("Usuário adicionado com sucesso!");
+		facesUtils.adicionaMensagemDeInformacao("Usuário adicionado com sucesso!");
 		preparaParaAdicionar();
 	}
 
 	public void remove() {
 		usuarioDao.remove(usuario);
-		facesUtils
-				.adicionaMensagemDeInformacao("Usuário removido com sucesso!");
+		facesUtils.adicionaMensagemDeInformacao("Usuário removido com sucesso!");
 		preparaParaAdicionar();
 	}
 
@@ -90,14 +94,12 @@ public class UsuarioBean {
 
 		boolean senhaInvalida = !confirmacaoDeSenha.equals(usuario.getSenha());
 		if (senhaInvalida) {
-			facesUtils
-					.adicionaMensagemDeErro("Senha e confirmação de senha não conferem.");
+			facesUtils.adicionaMensagemDeErro("Senha e confirmação de senha não conferem.");
 			return;
 		}
 
 		usuarioDao.atualiza(usuario);
-		facesUtils
-				.adicionaMensagemDeInformacao("Usuário atualizado com sucesso!");
+		facesUtils.adicionaMensagemDeInformacao("Usuário atualizado com sucesso!");
 		lista();
 	}
 
@@ -167,6 +169,30 @@ public class UsuarioBean {
 
 	public FacesUtils getFacesUtils() {
 		return facesUtils;
+	}
+
+	public DualListModel<Usuario> getUsuariosListModel() {
+		return usuariosListModel;
+	}
+
+	public void setUsuariosListModel(DualListModel<Usuario> usuariosListModel) {
+		this.usuariosListModel = usuariosListModel;
+	}
+
+	public List<Usuario> getUsuariosSource() {
+		return usuariosSource;
+	}
+
+	public void setUsuariosSource(List<Usuario> usuariosSource) {
+		this.usuariosSource = usuariosSource;
+	}
+
+	public List<Usuario> getUsuariosTarget() {
+		return usuariosTarget;
+	}
+
+	public void setUsuariosTarget(List<Usuario> usuariosTarget) {
+		this.usuariosTarget = usuariosTarget;
 	}
 
 }

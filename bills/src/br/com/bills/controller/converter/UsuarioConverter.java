@@ -3,12 +3,11 @@ package br.com.bills.controller.converter;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
 
 import br.com.bills.dao.UsuarioDao;
 import br.com.bills.model.Usuario;
 
-@FacesConverter(forClass=Usuario.class)
+//@FacesConverter(forClass = Usuario.class)
 public class UsuarioConverter implements Converter {
 
 	@Override
