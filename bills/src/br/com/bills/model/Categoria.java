@@ -24,6 +24,9 @@ public class Categoria implements Serializable {
 	@Transient
 	private double total;
 
+	@Transient
+	private double porcentagem;
+
 	public int getId() {
 		return id;
 	}
@@ -46,6 +49,14 @@ public class Categoria implements Serializable {
 
 	public void setTotal(double total) {
 		this.total = total;
+	}
+
+	public double getPorcentagem() {
+		return porcentagem;
+	}
+
+	public void setPorcentagem(double porcentagem) {
+		this.porcentagem = porcentagem;
 	}
 
 	@Override

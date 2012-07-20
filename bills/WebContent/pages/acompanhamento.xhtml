@@ -13,50 +13,100 @@
 	<ui:define name="conteudo">
 		<div id="content" class="container-fluidMax">
 			<div class="container well">
+
+				<t:saveState value="#{acompanhamentoBean.categoriasMensal}" />
+				<t:saveState value="#{acompanhamentoBean.categorias}" />
+				<t:saveState value="#{acompanhamentoBean.movimentacoes}" />
+
 				<h1>Acompanhamento</h1>
-				<br/>
+				<br />
 				<h:form id="form">
-					<p:dataList value="#{acompanhamentoBean.categorias}" var="cat">
-					#{cat.nome}:
-					<h:outputText value="#{cat.total}">
-						<f:convertNumber pattern="R$ #{msg['mascara.moeda']}"/>
-					</h:outputText>
-				</p:dataList>
-				<br/>
-					<p:menubar style="width: 99%;">  
-				       <p:submenu label="Ano" icon="ui-icon-calendar">  
-				            <p:menuitem value="2012" url="#" />  
-				            <p:menuitem value="2013" url="#" />  
-				            <p:menuitem value="2014" url="#" />  
-				            <p:menuitem value="2015" url="#" />  
-				            <p:separator />  
-				            <p:menuitem value="Todos" url="#" />  
-				        </p:submenu>  
-				       <p:menuitem value="janeiro" url="#" icon="ui-icon-carat-1-s" /> 
-				       <p:menuitem value="fevereiro" url="#" icon="ui-icon-carat-1-s" /> 
-				       <p:menuitem value="março" url="#" icon="ui-icon-carat-1-s" /> 
-				       <p:menuitem value="abril" url="#" icon="ui-icon-carat-1-s" /> 
-				       <p:menuitem value="maio" url="#" icon="ui-icon-carat-1-s" /> 
-				       <p:menuitem value="junho" url="#" icon="ui-icon-carat-1-s" /> 
-				       <p:menuitem value="julho" url="#" icon="ui-icon-carat-1-s" /> 
-				       <p:menuitem value="agosto" url="#" icon="ui-icon-carat-1-s" /> 
-				       <p:menuitem value="setembro" url="#" icon="ui-icon-carat-1-s" /> 
-				       <p:menuitem value="outubro" url="#" icon="ui-icon-carat-1-s" /> 
-				       <p:menuitem value="novembro" url="#" icon="ui-icon-carat-1-s" /> 
-				       <p:menuitem value="dezembro" url="#" icon="ui-icon-carat-1-s" /> 
-			        </p:menubar>
-					<br/><br/><br/>
-					<div style="float:right; margin-top: 0px;">
-						<p:pieChart value="#{acompanhamentoBean.pieModel}"
-							legendPosition="w" title="Geral"
-							style="width:480px;height:400px" />
-					</div>
-					<div style="float:left; margin-top: 0px;">
-						<p:pieChart value="#{acompanhamentoBean.pieModelMensal}"
-							legendPosition="w" title="Mensal"
-							style="width:480px;height:400px" />
-					</div>
+					<p:menubar style="width: 99%;">
+						<p:submenu label="Ano" icon="ui-icon-calendar">
+							<p:menuitem value="2012" url="#" />
+							<p:menuitem value="2013" url="#" />
+							<p:menuitem value="2014" url="#" />
+							<p:menuitem value="2015" url="#" />
+							<p:separator />
+							<p:menuitem value="Todos" url="#" />
+						</p:submenu>
+						<p:menuitem value="janeiro"
+							action="#{acompanhamentoBean.carregarMes(1)}"
+							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
+						<p:menuitem value="fevereiro"
+							action="#{acompanhamentoBean.carregarMes(2)}"
+							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
+						<p:menuitem value="março"
+							action="#{acompanhamentoBean.carregarMes(3)}"
+							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
+						<p:menuitem value="abril"
+							action="#{acompanhamentoBean.carregarMes(4)}"
+							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
+						<p:menuitem value="maio"
+							action="#{acompanhamentoBean.carregarMes(5)}"
+							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
+						<p:menuitem value="junho"
+							action="#{acompanhamentoBean.carregarMes(6)}"
+							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
+						<p:menuitem value="julho"
+							action="#{acompanhamentoBean.carregarMes(7)}"
+							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
+						<p:menuitem value="agosto"
+							action="#{acompanhamentoBean.carregarMes(8)}"
+							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
+						<p:menuitem value="setembro"
+							action="#{acompanhamentoBean.carregarMes(9)}"
+							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
+						<p:menuitem value="outubro"
+							action="#{acompanhamentoBean.carregarMes(10)}"
+							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
+						<p:menuitem value="novembro"
+							action="#{acompanhamentoBean.carregarMes(11)}"
+							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
+						<p:menuitem value="dezembro"
+							action="#{acompanhamentoBean.carregarMes(12)}"
+							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
+					</p:menubar>
+					<br />
+					<br />
+					<br />
+					<h2>
+						<h:outputText id="mes"
+							value="Mês de #{acompanhamentoBean.mesSelecionado} " />
+					</h2>
 					
+					Despesa:
+					<h:outputText id="valorDespesaMes" value="#{acompanhamentoBean.totalMensal}" style="color: red;">
+						<f:convertNumber pattern="R$ #{msg['mascara.moeda']}" />
+					</h:outputText>
+										
+					<p:dataList id="dataList"
+						value="#{acompanhamentoBean.categoriasMensal}" var="cat">
+						<div style="width: 25%;">
+							<b>#{cat.nome}: </b>
+							<h:outputText value="#{cat.total}">
+								<f:convertNumber pattern="R$ #{msg['mascara.moeda']}" />
+							</h:outputText>
+							<h:outputText value="#{cat.porcentagem}%" style="float: right;" />
+						</div>
+					</p:dataList>
+
+					<p:lineChart id="category"
+						value="#{acompanhamentoBean.graficoLinhasModel}"
+						legendPosition="e" minY="0" title="Acompanhamento de Gastos Anual"
+						style="height:300px;margin-top:20px" />
+
+					<div style="float: right; margin-top: 0px;">
+						<p:pieChart value="#{acompanhamentoBean.pieModel}"
+							legendPosition="w" title="Geral" style="width:480px;height:400px" />
+					</div>
+					<div style="float: left; margin-top: 0px;">
+						<p:pieChart id="pieModelMensal"
+							value="#{acompanhamentoBean.pieModelMensal}" legendPosition="w"
+							title="Mês #{acompanhamentoBean.mesSelecionado}"
+							style="width:480px;height:400px" />
+					</div>
+
 				</h:form>
 
 			</div>

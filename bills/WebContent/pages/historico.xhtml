@@ -20,7 +20,7 @@
 					
 					<p:growl id="messages" showDetail="true" />
 					
-					<p:menubar>  
+					<p:menubar style="width: 99%;">  
 				       <p:submenu label="Ano" icon="ui-icon-calendar">  
 				            <p:menuitem value="2012" url="#" />  
 				            <p:menuitem value="2013" url="#" />  
@@ -64,7 +64,7 @@
 	
 							<p:column headerText="Valor" >
 								<h:outputText value="#{item.valor}" >
-									<f:convertNumber pattern="€ #{msg['mascara.moeda']}"/>
+									<f:convertNumber pattern="R$ #{msg['mascara.moeda']}"/>
 								</h:outputText>
 							</p:column>
 	
