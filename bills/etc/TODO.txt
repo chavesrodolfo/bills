@@ -1,6 +1,7 @@
 BUGS
 
-* ao dar update os caracteres especiais estao sendo alterados
+verificar a forma correta de se usar o EntityManager no DAO, a conexao parece nao estra sendo encerrada.
+Como fazer a configuracao do c3p0?
 
 TODO
 

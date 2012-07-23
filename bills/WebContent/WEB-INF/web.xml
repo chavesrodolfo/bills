@@ -16,8 +16,7 @@
 	</listener>
 	<listener>
 		<listener-class>
-			org.springframework.web.context.request.RequestContextListener
-		</listener-class>
+			org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
 	<filter>
 		<description>
@@ -32,11 +31,26 @@
 		</description>
 		<filter-name>oemiv</filter-name>
 		<filter-class>
-			org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter
-		</filter-class>
+			org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>oemiv</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>SetCharacterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>SetCharacterEncodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<context-param>
@@ -47,7 +61,7 @@
 	</context-param>
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
-<!-- 		<param-value>Development</param-value> -->
+		<!-- <param-value>Development</param-value> -->
 		<param-value>Production</param-value>
 	</context-param>
 	<context-param>
@@ -60,12 +74,12 @@
 	</context-param>
 	<context-param>
 		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-<!-- 		<param-value>server</param-value> -->
+		<!-- <param-value>server</param-value> -->
 		<param-value>client</param-value>
 	</context-param>
 	<context-param>
-	<param-name>com.sun.faces.enableThreading</param-name>
-	<param-value>false</param-value>
+		<param-name>com.sun.faces.enableThreading</param-name>
+		<param-value>false</param-value>
 	</context-param>
 	<context-param>
 		<param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
@@ -96,13 +110,13 @@
 		<filter-name>PrimeFaces FileUpload Filter</filter-name>
 		<servlet-name>Faces Servlet</servlet-name>
 	</filter-mapping>
-	 <context-param>
-        <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
-        <param-value>6LcE59MSAAAAAOFSCO0JoickfSKnGiuY3LxMd054</param-value>
-    </context-param>
- 
-    <context-param>
-        <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
-        <param-value>6LcE59MSAAAAACe5HtXhztXHcsuIfAckHM4sK2Xm</param-value>
-    </context-param>
+	<context-param>
+		<param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+		<param-value>6LcE59MSAAAAAOFSCO0JoickfSKnGiuY3LxMd054</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+		<param-value>6LcE59MSAAAAACe5HtXhztXHcsuIfAckHM4sK2Xm</param-value>
+	</context-param>
 </web-app>
