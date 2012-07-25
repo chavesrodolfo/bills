@@ -17,54 +17,61 @@
 				<t:saveState value="#{acompanhamentoBean.categoriasMensal}" />
 				<t:saveState value="#{acompanhamentoBean.categorias}" />
 				<t:saveState value="#{acompanhamentoBean.movimentacoes}" />
+				<t:saveState value="#{acompanhamentoBean.anoSelecionado}" />
+				<t:saveState value="#{acompanhamentoBean.mesSelecionado}" />
+				<t:saveState value="#{acompanhamentoBean.mesSelecionadoTexto}" />
 
 				<h1>Acompanhamento</h1>
 				<br />
 				<h:form id="form">
-					<p:menubar style="width: 99%;">
-						<p:submenu label="Ano" icon="ui-icon-calendar">
-							<p:menuitem value="2012" url="#" />
-							<p:menuitem value="2013" url="#" />
-							<p:menuitem value="2014" url="#" />
-							<p:menuitem value="2015" url="#" />
+					<p:menubar id="menu" style="width: 99%;">
+						<p:submenu label="#{acompanhamentoBean.anoSelecionado}" icon="ui-icon-calendar">
+							<p:menuitem value="2012" action="#{acompanhamentoBean.carregarAno(2012)}"
+								update="dataList, pieModelMensal, mes, valorDespesaMes, menu, graficoLinhas" />
+							<p:menuitem value="2013" action="#{acompanhamentoBean.carregarAno(2013)}"
+								update="dataList, pieModelMensal, mes, valorDespesaMes, menu, graficoLinhas" />
+							<p:menuitem value="2014" action="#{acompanhamentoBean.carregarAno(2014)}"
+								update="dataList, pieModelMensal, mes, valorDespesaMes, menu, graficoLinhas" />
+							<p:menuitem value="2015" action="#{acompanhamentoBean.carregarAno(2015)}"
+								update="dataList, pieModelMensal, mes, valorDespesaMes, menu, graficoLinhas" />
 							<p:separator />
 							<p:menuitem value="Todos" url="#" />
 						</p:submenu>
 						<p:menuitem value="janeiro"
-							action="#{acompanhamentoBean.carregarMes(1)}"
+							action="#{acompanhamentoBean.carregarMes(0)}"
 							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
 						<p:menuitem value="fevereiro"
-							action="#{acompanhamentoBean.carregarMes(2)}"
+							action="#{acompanhamentoBean.carregarMes(1)}"
 							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
 						<p:menuitem value="março"
-							action="#{acompanhamentoBean.carregarMes(3)}"
+							action="#{acompanhamentoBean.carregarMes(2)}"
 							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
 						<p:menuitem value="abril"
-							action="#{acompanhamentoBean.carregarMes(4)}"
+							action="#{acompanhamentoBean.carregarMes(3)}"
 							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
 						<p:menuitem value="maio"
-							action="#{acompanhamentoBean.carregarMes(5)}"
+							action="#{acompanhamentoBean.carregarMes(4)}"
 							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
 						<p:menuitem value="junho"
-							action="#{acompanhamentoBean.carregarMes(6)}"
+							action="#{acompanhamentoBean.carregarMes(5)}"
 							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
 						<p:menuitem value="julho"
-							action="#{acompanhamentoBean.carregarMes(7)}"
+							action="#{acompanhamentoBean.carregarMes(6)}"
 							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
 						<p:menuitem value="agosto"
-							action="#{acompanhamentoBean.carregarMes(8)}"
+							action="#{acompanhamentoBean.carregarMes(7)}"
 							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
 						<p:menuitem value="setembro"
-							action="#{acompanhamentoBean.carregarMes(9)}"
+							action="#{acompanhamentoBean.carregarMes(8)}"
 							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
 						<p:menuitem value="outubro"
-							action="#{acompanhamentoBean.carregarMes(10)}"
+							action="#{acompanhamentoBean.carregarMes(9)}"
 							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
 						<p:menuitem value="novembro"
-							action="#{acompanhamentoBean.carregarMes(11)}"
+							action="#{acompanhamentoBean.carregarMes(10)}"
 							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
 						<p:menuitem value="dezembro"
-							action="#{acompanhamentoBean.carregarMes(12)}"
+							action="#{acompanhamentoBean.carregarMes(11)}"
 							update="dataList, pieModelMensal, mes, valorDespesaMes" icon="ui-icon-carat-1-s" />
 					</p:menubar>
 					<br />
@@ -72,7 +79,7 @@
 					<br />
 					<h2>
 						<h:outputText id="mes"
-							value="Mês de #{acompanhamentoBean.mesSelecionado} " />
+							value="Mês de #{acompanhamentoBean.mesSelecionadoTexto} " />
 					</h2>
 					
 					Despesa:
@@ -91,9 +98,9 @@
 						</div>
 					</p:dataList>
 
-					<p:lineChart id="category"
+					<p:lineChart id="graficoLinhas"
 						value="#{acompanhamentoBean.graficoLinhasModel}"
-						legendPosition="e" minY="0" title="Acompanhamento de Gastos Anual"
+						legendPosition="e" minY="0" title="Acompanhamento de Gastos deste ano"
 						style="height:300px;margin-top:20px" />
 
 					<div style="float: right; margin-top: 0px;">
@@ -103,7 +110,7 @@
 					<div style="float: left; margin-top: 0px;">
 						<p:pieChart id="pieModelMensal"
 							value="#{acompanhamentoBean.pieModelMensal}" legendPosition="w"
-							title="Mês #{acompanhamentoBean.mesSelecionado}"
+							title="Mês #{acompanhamentoBean.mesSelecionadoTexto}"
 							style="width:480px;height:400px" />
 					</div>
 

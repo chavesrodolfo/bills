@@ -1,6 +1,7 @@
 package br.com.bills.controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -35,6 +36,11 @@ public class BillBean {
 
 	private Bill[] selectedBills;
 
+	private Long anoSelecionado;
+	private Long mesSelecionado;
+
+	private Calendar cal = Calendar.getInstance();
+
 	@ManagedProperty("#{facesUtils}")
 	private FacesUtils facesUtils;
 
@@ -64,6 +70,7 @@ public class BillBean {
 
 	public String prepararHistorico() {
 		bills = billDao.listaInativas();
+		anoSelecionado = Long.valueOf(cal.get(Calendar.YEAR));
 		return "/pages/historico.xhtml";
 	}
 
@@ -87,6 +94,29 @@ public class BillBean {
 	public void excluirTodasContas() {
 		operacoesBill.excluirTodasContas();
 		facesUtils.adicionaMensagemDeInformacao("Todas as Contas foram removidas com sucesso!");
+	}
+
+	public void carregarMes(Long mes) {
+		mesSelecionado = mes;
+		verificaMesAno();
+		bills = billDao.buscarContas(Integer.parseInt(anoSelecionado.toString()),
+				Integer.parseInt(mesSelecionado.toString()));
+	}
+
+	public void carregarAno(Long ano) {
+		anoSelecionado = ano;
+		verificaMesAno();
+		bills = billDao.buscarContas(Integer.parseInt(anoSelecionado.toString()),
+				Integer.parseInt(mesSelecionado.toString()));
+	}
+
+	private void verificaMesAno() {
+		if (anoSelecionado == null) {
+			anoSelecionado = Long.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+		}
+		if (mesSelecionado == null) {
+			mesSelecionado = Long.valueOf(Calendar.getInstance().get(Calendar.MONTH));
+		}
 	}
 
 	public void addLinhas() {
@@ -389,6 +419,22 @@ public class BillBean {
 
 	public void setOperacoesBill(OperacoesBill operacoesBill) {
 		this.operacoesBill = operacoesBill;
+	}
+
+	public Long getAnoSelecionado() {
+		return anoSelecionado;
+	}
+
+	public void setAnoSelecionado(Long anoSelecionado) {
+		this.anoSelecionado = anoSelecionado;
+	}
+
+	public Long getMesSelecionado() {
+		return mesSelecionado;
+	}
+
+	public void setMesSelecionado(Long mesSelecionado) {
+		this.mesSelecionado = mesSelecionado;
 	}
 
 }

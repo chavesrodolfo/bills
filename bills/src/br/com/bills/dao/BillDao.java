@@ -21,4 +21,6 @@ public interface BillDao {
 
 	public void excluirTodasContas();
 
+	public List<Bill> buscarContas(int ano, int mes);
+
 }

@@ -1,10 +1,11 @@
 BUGS
 
-verificar a forma correta de se usar o EntityManager no DAO, a conexao parece nao estra sendo encerrada.
-Como fazer a configuracao do c3p0?
+ultimo dia do mes de fev nao esta correto quan eh ano bixesto
+Calendar calFim = new GregorianCalendar(ano, mes, Calendar.getInstance().getMaximum(
+				GregorianCalendar.DAY_OF_MONTH));
+				
 
 TODO
 
 * widget Balanco Geral
-* filtros mensais e anual no historico
-* filtro no historico pela data selecionada no calendario
+* Filtrar por todos os anos na tela de acompanhamento e historico

@@ -13,7 +13,6 @@ import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 
-import br.com.bills.controller.util.BillsConstants;
 import br.com.bills.controller.util.FacesUtils;
 import br.com.bills.dao.MovimentacaoDao;
 import br.com.bills.model.Categoria;
@@ -40,7 +39,10 @@ public class AcompanhamentoBean {
 	private PieChartModel pieModel;
 	private PieChartModel pieModelMensal;
 	private CartesianChartModel graficoLinhasModel;
-	private String mesSelecionado;
+	private String mesSelecionadoTexto;
+
+	private Long anoSelecionado;
+	private Long mesSelecionado;
 
 	private double totalGeral = 0;
 	private double totalMensal = 0;
@@ -49,10 +51,10 @@ public class AcompanhamentoBean {
 		movimentacoes = movimentacaoDao.listarTodas(usuarioWeb.getUsuario());
 		categorias = movimentacaoDao.listarCategorias();
 		somarPorCategoriaGeral();
-		somarPorCategoriaMensal(Calendar.getInstance().get(Calendar.MONTH));
+		somarPorCategoriaMensal(Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.YEAR));
 		porcentagemCategoriaMensal();
 		criarGraficoLinhasModel();
-		mesSelecionado = getMes(getMesAtual());
+		verificaMesAno();
 		return "/pages/acompanhamento.xhtml";
 	}
 
@@ -75,7 +77,7 @@ public class AcompanhamentoBean {
 			}
 			categoria.setTotal(categoria.getTotal() + Utils.precision(soma));
 			if (categoria.getTotal() > 0) {
-				pieModel.set(categoria.getNome() + ": R$ " + Utils.formatarReal(categoria.getTotal()),
+				pieModel.set(categoria.getNome() + ": " + Utils.formatarReal(categoria.getTotal()),
 						categoria.getTotal());
 				totalGeral += categoria.getTotal();
 			}
@@ -85,7 +87,7 @@ public class AcompanhamentoBean {
 		}
 	}
 
-	private void somarPorCategoriaMensal(int mes) {
+	private void somarPorCategoriaMensal(int mes, int ano) {
 		pieModelMensal = new PieChartModel();
 		categoriasMensal.removeAll(categoriasMensal);
 		for (Categoria categoria : categorias) {
@@ -95,8 +97,10 @@ public class AcompanhamentoBean {
 				Calendar dataMov = Calendar.getInstance();
 				dataMov.setTime(movimentacao.getData());
 				int mesMov = dataMov.get(Calendar.MONTH);
+				int anoMov = dataMov.get(Calendar.YEAR);
 
-				if (categoria.getNome().equals(movimentacao.getCategoria().getNome()) && mes == mesMov) {
+				if (categoria.getNome().equals(movimentacao.getCategoria().getNome()) && (mes == mesMov)
+						&& (ano == anoMov)) {
 					soma += movimentacao.getValor();
 				}
 			}
@@ -114,9 +118,30 @@ public class AcompanhamentoBean {
 	}
 
 	public void carregarMes(Long mes) {
-		somarPorCategoriaMensal(Integer.valueOf(mes.toString()));
+		mesSelecionado = mes;
+		verificaMesAno();
+		somarPorCategoriaMensal(Integer.parseInt(mesSelecionado.toString()),
+				Integer.parseInt(anoSelecionado.toString()));
 		porcentagemCategoriaMensal();
-		mesSelecionado = getMes(Integer.valueOf(mes.toString()));
+	}
+
+	public void carregarAno(Long ano) {
+		anoSelecionado = ano;
+		verificaMesAno();
+		somarPorCategoriaMensal(Integer.parseInt(mesSelecionado.toString()),
+				Integer.parseInt(anoSelecionado.toString()));
+		porcentagemCategoriaMensal();
+		criarGraficoLinhasModel();
+	}
+
+	private void verificaMesAno() {
+		if (anoSelecionado == null) {
+			anoSelecionado = Long.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+		}
+		if (mesSelecionado == null) {
+			mesSelecionado = Long.valueOf(Calendar.getInstance().get(Calendar.MONTH));
+		}
+		mesSelecionadoTexto = Utils.getMes(Integer.valueOf(mesSelecionado.toString()));
 	}
 
 	private void criarGraficoLinhasModel() {
@@ -127,30 +152,15 @@ public class AcompanhamentoBean {
 
 		ChartSeries despesas = new ChartSeries();
 		despesas.setLabel("Despesa");
+		verificaMesAno();
 		for (int i = 1; i <= getMesAtual(); i++) {
-			double somaMovimentacao = somarMovimentacaoMes(i);
+			double somaMovimentacao = somarMovimentacaoMes(i, Integer.parseInt(anoSelecionado.toString()));
 			// if (somaMovimentacao > 0) {
-				despesas.set(getMes(i), somaMovimentacao);
+			despesas.set(Utils.getMes(i), somaMovimentacao);
 			// }
 		}
 
 		graficoLinhasModel.addSeries(despesas);
-	}
-
-	private String getMes(int i) {
-		if (i == 1) return "Janeiro";
-		if (i == 2) return "Fevereiro";
-		if (i == 3) return "Março";
-		if (i == 4) return "Abril";
-		if (i == 5) return "Maio";
-		if (i == 6) return "Junho";
-		if (i == 7) return "Julho";
-		if (i == 8) return "Agosto";
-		if (i == 9) return "Setembro";
-		if (i == 10) return "Outubro";
-		if (i == 11) return "Novembro";
-		if (i == 12) return "Dezembro";
-		return BillsConstants.EMPTY;
 	}
 
 	private int getMesAtual() {
@@ -160,13 +170,14 @@ public class AcompanhamentoBean {
 		return mes;
 	}
 
-	private double somarMovimentacaoMes(int mes) {
+	private double somarMovimentacaoMes(int mes, int ano) {
 		double totalMes = 0;
 		for (Movimentacao movimentacao : movimentacoes) {
 			Calendar dataMov = Calendar.getInstance();
 			dataMov.setTime(movimentacao.getData());
 			int mesMov = dataMov.get(Calendar.MONTH);
-			if (mesMov == mes) {
+			int anoMov = dataMov.get(Calendar.YEAR);
+			if ((mesMov == mes) && (anoMov == ano)) {
 				totalMes += movimentacao.getValor();
 			}
 		}
@@ -261,11 +272,35 @@ public class AcompanhamentoBean {
 		this.graficoLinhasModel = graficoLinhasModel;
 	}
 
-	public String getMesSelecionado() {
+	public String getmesSelecionadoTexto() {
+		return mesSelecionadoTexto;
+	}
+
+	public void setmesSelecionadoTexto(String mesSelecionadoTexto) {
+		this.mesSelecionadoTexto = mesSelecionadoTexto;
+	}
+
+	public String getMesSelecionadoTexto() {
+		return mesSelecionadoTexto;
+	}
+
+	public void setMesSelecionadoTexto(String mesSelecionadoTexto) {
+		this.mesSelecionadoTexto = mesSelecionadoTexto;
+	}
+
+	public Long getAnoSelecionado() {
+		return anoSelecionado;
+	}
+
+	public void setAnoSelecionado(Long anoSelecionado) {
+		this.anoSelecionado = anoSelecionado;
+	}
+
+	public Long getMesSelecionado() {
 		return mesSelecionado;
 	}
 
-	public void setMesSelecionado(String mesSelecionado) {
+	public void setMesSelecionado(Long mesSelecionado) {
 		this.mesSelecionado = mesSelecionado;
 	}
 

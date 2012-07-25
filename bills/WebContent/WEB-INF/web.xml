@@ -19,30 +19,11 @@
 			org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
 	<filter>
-		<description>
-			Necessário para o Lazy Loading funcionar quando as entidades
-			gerenciadas pelo EntityManager forem utilizadas em
-			ManagedBeans ou em JSPs.
-
-			Um bean com o id 'entityManagerFactory' precisa existir no
-			applicationContext.xml. Se precisar pode ser informado um
-			parâmetro no filtro para indicar qual o id do bean é o
-			EntityManagerFactory. (Ver documentação do Spring)
-		</description>
-		<filter-name>oemiv</filter-name>
-		<filter-class>
-			org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>oemiv</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<filter>
 		<filter-name>SetCharacterEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
 		<init-param>
 			<param-name>encoding</param-name>
-			<param-value>UTF8</param-value>
+			<param-value>UTF-8</param-value>
 		</init-param>
 		<init-param>
 			<param-name>forceEncoding</param-name>

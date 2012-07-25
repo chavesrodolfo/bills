@@ -6,26 +6,64 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	
-	<!-- Alias para facilitar -->
-	<c:set var="ctx" value="#{request.contextPath}" scope="request"/>
+
+<!-- Alias para facilitar -->
+<c:set var="ctx" value="#{request.contextPath}" scope="request" />
 
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Bills</title>
-	<link type="text/css" rel="stylesheet" href="${ctx}/resources/css/screen.css"/>
-    <link rel="stylesheet" href="${ctx}/resources/css/bootstrap.css" type="text/css" media="all"/>
-    <link rel="stylesheet" href="${ctx}/resources/css/custom.css" type="text/css" media="all"/>
-	<link href='http://fonts.googleapis.com/css?family=Rokkitt' rel='stylesheet' type='text/css'/> 
-	
+	<title>Projeto Bills</title>
+	<link type="text/css" rel="stylesheet"
+		href="${ctx}/resources/css/screen.css" />
+	<link rel="stylesheet" href="${ctx}/resources/css/bootstrap.css"
+		type="text/css" media="all" />
+	<link rel="stylesheet" href="${ctx}/resources/css/custom.css"
+		type="text/css" media="all" />
+	<link href='http://fonts.googleapis.com/css?family=Rokkitt'
+		rel='stylesheet' type='text/css' />
+	<script type="text/javascript">
+		PrimeFaces.locales['pt'] = {
+                closeText: 'Fechar',
+                prevText: 'Anterior',
+                nextText: 'Próximo',
+                currentText: 'Começo',
+                monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+                monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago','Set','Out','Nov','Des'],
+                dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+                dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
+                dayNamesMin: ['D','S','T','Q','Q','S','S'],
+                weekHeader: 'Semana',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Só Horas',
+                timeText: 'Tempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                currentText: 'Data Atual',
+                ampm: false,
+                month: 'Mês',
+                week: 'Semana',
+                day: 'Dia',
+                allDayText : 'Todo Dia'
+            };
+	</script>
 	<!-- Add JavaScript library for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
+	<!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 </h:head>
 
 <h:body>
-	 <a href="${ctx}"> <div id="logo"><div class="wrap"><h1>Bills</h1></div></div> </a>
+	<a href="${ctx}">
+		<div id="logo">
+			<div class="wrap">
+				<h1>Bills</h1>
+			</div>
+		</div>
+	</a>
 
 	<div id="container">
 		<ui:insert name="cabecalho">
@@ -44,7 +82,8 @@
 		<div id="ajax-loading">
 			<p:ajaxStatus>
 				<f:facet name="start">
-					<h:graphicImage library="images" width="30px" height="30px" name="ajax-loader.gif" />
+					<h:graphicImage library="images" width="30px" height="30px"
+						name="ajax-loader.gif" />
 				</f:facet>
 				<f:facet name="complete">
 					<h:outputText value="" />
@@ -62,5 +101,5 @@
 		</ui:insert>
 	</footer>
 </h:body>
-	
+
 </html>
