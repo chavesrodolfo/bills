@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/pages/template/template_padrao.xhtml"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:p="http://primefaces.org/ui">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+
+	<ui:define name="conteudo">
+		<div id="content" class="container-fluidMax">
+			<div class="container well">
+				<h:form id="form">
+					<t:saveState value="#{planejamentoBean.planejamentoMensal}" />
+					<t:saveState value="#{planejamentoBean.categoriasMensal}" />
+					
+					<div style="float: left; width: 40%;">
+						<h2>Planejamento do mês atual</h2>
+						
+						<p:dataList id="dataListPlanejamento" value="#{planejamentoBean.planejamentoMensal}" 
+							var="plan" rendered="#{!planejamentoBean.planejamentoVazio()}">
+							<b>#{plan.categoria.nome}: </b>
+							<h:outputText value="#{plan.valor}" style="float: right;">
+								<f:convertNumber pattern="R$ #{msg['mascara.moeda']}" />
+							</h:outputText>
+						</p:dataList>
+						
+						<p:commandButton value="Novo" action="#{planejamentoBean.gerarNovoPlanejamento}"
+							ajax="false" icon="ui-icon-circle-plus"
+							rendered="#{planejamentoBean.planejamentoVazio()}"/>
+							
+					</div>
+					<div style="float: right; width: 40%;">
+						<h2>Gastos até o momento</h2>
+						<p:dataList id="dataListGasto" value="#{planejamentoBean.categoriasMensal}" var="cat" >
+							<b>#{cat.nome}: </b>
+							<h:outputText value="#{cat.total}" style="float: right;">
+								<f:convertNumber pattern="R$ #{msg['mascara.moeda']}" />
+							</h:outputText>
+ 						</p:dataList>
+					</div>
+					
+				</h:form>
+
+			</div>
+		</div>
+	</ui:define>
+
+</ui:composition>

@@ -3,10 +3,9 @@ package br.com.bills.util;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
-import br.com.bills.controller.util.BillsConstants;
 
 public class Utils {
 
@@ -41,11 +40,18 @@ public class Utils {
 		if (i == 9) return "Outubro";
 		if (i == 10) return "Novembro";
 		if (i == 11) return "Dezembro";
-		return BillsConstants.EMPTY;
+		return "";
 	}
 
 	public static String formatarData(Date data) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		return format.format(data);
+	}
+
+	public static int getMesAtual() {
+		Calendar data = Calendar.getInstance();
+		data.setTime(new Date());
+		int mes = data.get(Calendar.MONTH);
+		return mes;
 	}
 }

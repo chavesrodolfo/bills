@@ -1,4 +1,4 @@
-package br.com.bills.service;
+package br.com.bills.service.impl;
 
 import java.util.Date;
 
@@ -10,6 +10,7 @@ import br.com.bills.dao.InformativoDao;
 import br.com.bills.model.Bill;
 import br.com.bills.model.HistoricoAlteracao;
 import br.com.bills.model.Usuario;
+import br.com.bills.service.OperacoesBill;
 
 @Service("operacoesBill")
 public class OperacoesBillImpl implements OperacoesBill {

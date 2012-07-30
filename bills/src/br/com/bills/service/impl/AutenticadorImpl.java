@@ -1,4 +1,4 @@
-package br.com.bills.service;
+package br.com.bills.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import br.com.bills.dao.UsuarioDao;
 import br.com.bills.model.Perfil;
 import br.com.bills.model.Usuario;
+import br.com.bills.service.Autenticador;
 
 @Service("autenticador")
 public class AutenticadorImpl implements Autenticador {

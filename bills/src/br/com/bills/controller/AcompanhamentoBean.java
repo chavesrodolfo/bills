@@ -2,7 +2,6 @@ package br.com.bills.controller;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -17,6 +16,7 @@ import br.com.bills.controller.util.FacesUtils;
 import br.com.bills.dao.MovimentacaoDao;
 import br.com.bills.model.Categoria;
 import br.com.bills.model.Movimentacao;
+import br.com.bills.service.MovimentacaoFinanceira;
 import br.com.bills.util.Utils;
 
 @ManagedBean
@@ -32,6 +32,9 @@ public class AcompanhamentoBean {
 	@ManagedProperty("#{movimentacaoDao}")
 	private MovimentacaoDao movimentacaoDao;
 
+	@ManagedProperty("#{movimentacaoFinanceira}")
+	private MovimentacaoFinanceira movimentacaoFinanceira;
+
 	private List<Movimentacao> movimentacoes = new ArrayList<Movimentacao>();
 	private List<Categoria> categorias = new ArrayList<Categoria>();
 	private List<Categoria> categoriasMensal = new ArrayList<Categoria>();
@@ -43,43 +46,42 @@ public class AcompanhamentoBean {
 
 	private Long anoSelecionado;
 	private Long mesSelecionado;
-
-	private double totalGeral = 0;
 	private double totalMensal = 0;
 
 	public String prepararAcompanhamento() {
-		movimentacoes = movimentacaoDao.listarTodas(usuarioWeb.getUsuario());
-		categorias = movimentacaoDao.listarCategorias();
-		somarPorCategoriaGeral();
-		somarPorCategoriaMensal(Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.YEAR));
-		porcentagemCategoriaMensal();
-		criarGraficoLinhasModel();
 		verificaMesAno();
+		categorias = movimentacaoFinanceira.somarPorCategoriaGeral(usuarioWeb.getUsuario());
+		carregarCategoriasMensal();
+		criarGraficoPizzaGeral();
+		criarGraficoPizzaMensal();
+		criarGraficoLinhasModel();
+		totalMensal();
+
 		return "/pages/acompanhamento.xhtml";
 	}
 
-	private void porcentagemCategoriaMensal() {
+	private List<Categoria> removerCategoriasZeradas() {
+		List<Categoria> categoriasUsadas = new ArrayList<Categoria>();
+		for (Categoria cat : categoriasMensal) {
+			if (cat.getTotal() > 0) {
+				categoriasUsadas.add(cat);
+			}
+		}
+		return categoriasUsadas;
+	}
+
+	private void totalMensal() {
 		for (Categoria categoria : categoriasMensal) {
-			categoria.setPorcentagem(Utils.precision(categoria.getTotal() / totalMensal * 100));
+			totalMensal += categoria.getTotal();
 		}
 	}
 
-	private void somarPorCategoriaGeral() {
+	private void criarGraficoPizzaGeral() {
 		pieModel = new PieChartModel();
-
 		for (Categoria categoria : categorias) {
-			categoria.setTotal(0);
-			double soma = 0;
-			for (Movimentacao movimentacao : movimentacoes) {
-				if (categoria.getNome().equals(movimentacao.getCategoria().getNome())) {
-					soma += movimentacao.getValor();
-				}
-			}
-			categoria.setTotal(categoria.getTotal() + Utils.precision(soma));
 			if (categoria.getTotal() > 0) {
 				pieModel.set(categoria.getNome() + ": " + Utils.formatarReal(categoria.getTotal()),
 						categoria.getTotal());
-				totalGeral += categoria.getTotal();
 			}
 		}
 		if (pieModel.getData().isEmpty()) {
@@ -87,29 +89,12 @@ public class AcompanhamentoBean {
 		}
 	}
 
-	private void somarPorCategoriaMensal(int mes, int ano) {
+	private void criarGraficoPizzaMensal() {
 		pieModelMensal = new PieChartModel();
-		categoriasMensal.removeAll(categoriasMensal);
-		for (Categoria categoria : categorias) {
-			categoria.setTotal(0);
-			double soma = 0;
-			for (Movimentacao movimentacao : movimentacoes) {
-				Calendar dataMov = Calendar.getInstance();
-				dataMov.setTime(movimentacao.getData());
-				int mesMov = dataMov.get(Calendar.MONTH);
-				int anoMov = dataMov.get(Calendar.YEAR);
-
-				if (categoria.getNome().equals(movimentacao.getCategoria().getNome()) && (mes == mesMov)
-						&& (ano == anoMov)) {
-					soma += movimentacao.getValor();
-				}
-			}
-			categoria.setTotal(categoria.getTotal() + Utils.precision(soma));
+		for (Categoria categoria : categoriasMensal) {
 			if (categoria.getTotal() > 0) {
-			pieModelMensal.set(categoria.getNome() + ": " + Utils.formatarReal(categoria.getTotal()),
+				pieModelMensal.set(categoria.getNome() + ": " + Utils.formatarReal(categoria.getTotal()),
 						categoria.getTotal());
-				categoriasMensal.add(categoria);
-				totalMensal += categoria.getTotal();
 			}
 		}
 		if (pieModelMensal.getData().isEmpty()) {
@@ -120,18 +105,24 @@ public class AcompanhamentoBean {
 	public void carregarMes(Long mes) {
 		mesSelecionado = mes;
 		verificaMesAno();
-		somarPorCategoriaMensal(Integer.parseInt(mesSelecionado.toString()),
-				Integer.parseInt(anoSelecionado.toString()));
-		porcentagemCategoriaMensal();
+		carregarCategoriasMensal();
+		criarGraficoPizzaGeral();
+		criarGraficoPizzaMensal();
+		totalMensal();
 	}
 
 	public void carregarAno(Long ano) {
 		anoSelecionado = ano;
 		verificaMesAno();
-		somarPorCategoriaMensal(Integer.parseInt(mesSelecionado.toString()),
-				Integer.parseInt(anoSelecionado.toString()));
-		porcentagemCategoriaMensal();
+		carregarCategoriasMensal();
 		criarGraficoLinhasModel();
+		totalMensal();
+	}
+
+	private void carregarCategoriasMensal() {
+		categoriasMensal = movimentacaoFinanceira.somarPorCategoriaMensal(Integer.parseInt(mesSelecionado.toString()),
+				Integer.parseInt(anoSelecionado.toString()), usuarioWeb.getUsuario());
+		categoriasMensal = removerCategoriasZeradas();
 	}
 
 	private void verificaMesAno() {
@@ -153,35 +144,15 @@ public class AcompanhamentoBean {
 		ChartSeries despesas = new ChartSeries();
 		despesas.setLabel("Despesa");
 		verificaMesAno();
-		for (int i = 1; i <= getMesAtual(); i++) {
-			double somaMovimentacao = somarMovimentacaoMes(i, Integer.parseInt(anoSelecionado.toString()));
+		for (int i = 1; i <= Utils.getMesAtual(); i++) {
+			double somaMovimentacao = movimentacaoFinanceira.somarMovimentacaoMes(i,
+					Integer.parseInt(anoSelecionado.toString()), usuarioWeb.getUsuario());
 			// if (somaMovimentacao > 0) {
 			despesas.set(Utils.getMes(i), somaMovimentacao);
 			// }
 		}
 
 		graficoLinhasModel.addSeries(despesas);
-	}
-
-	private int getMesAtual() {
-		Calendar data = Calendar.getInstance();
-		data.setTime(new Date());
-		int mes = data.get(Calendar.MONTH);
-		return mes;
-	}
-
-	private double somarMovimentacaoMes(int mes, int ano) {
-		double totalMes = 0;
-		for (Movimentacao movimentacao : movimentacoes) {
-			Calendar dataMov = Calendar.getInstance();
-			dataMov.setTime(movimentacao.getData());
-			int mesMov = dataMov.get(Calendar.MONTH);
-			int anoMov = dataMov.get(Calendar.YEAR);
-			if ((mesMov == mes) && (anoMov == ano)) {
-				totalMes += movimentacao.getValor();
-			}
-		}
-		return totalMes;
 	}
 
 	public FacesUtils getFacesUtils() {
@@ -248,22 +219,6 @@ public class AcompanhamentoBean {
 		this.categoriasMensal = categoriasMensal;
 	}
 
-	public double getTotalGeral() {
-		return totalGeral;
-	}
-
-	public void setTotalGeral(double totalGeral) {
-		this.totalGeral = totalGeral;
-	}
-
-	public double getTotalMensal() {
-		return totalMensal;
-	}
-
-	public void setTotalMensal(double totalMensal) {
-		this.totalMensal = totalMensal;
-	}
-
 	public CartesianChartModel getGraficoLinhasModel() {
 		return graficoLinhasModel;
 	}
@@ -302,6 +257,22 @@ public class AcompanhamentoBean {
 
 	public void setMesSelecionado(Long mesSelecionado) {
 		this.mesSelecionado = mesSelecionado;
+	}
+
+	public MovimentacaoFinanceira getMovimentacaoFinanceira() {
+		return movimentacaoFinanceira;
+	}
+
+	public void setMovimentacaoFinanceira(MovimentacaoFinanceira movimentacaoFinanceira) {
+		this.movimentacaoFinanceira = movimentacaoFinanceira;
+	}
+
+	public double getTotalMensal() {
+		return totalMensal;
+	}
+
+	public void setTotalMensal(double totalMensal) {
+		this.totalMensal = totalMensal;
 	}
 
 }
