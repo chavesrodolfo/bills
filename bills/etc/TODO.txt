@@ -1,9 +1,12 @@
 BUGS
 
-ultimo dia do mes de fev nao esta correto quan eh ano bixesto
-Calendar calFim = new GregorianCalendar(ano, mes, Calendar.getInstance().getMaximum(
+1 ultimo dia do mes de fev nao esta correto quan eh ano bixesto
+  |-> Calendar calFim = new GregorianCalendar(ano, mes, Calendar.getInstance().getMaximum(
 				GregorianCalendar.DAY_OF_MONTH));
 				
+2 Filtros e ordenacoes da datatable estao provocando update indevido. Verificar relacionamento JPA.
+
+3 Atualizações na datatable estão trocando caracteres especiais por "lixo" 
 
 TODO
 

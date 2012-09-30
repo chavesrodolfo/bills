@@ -66,12 +66,10 @@ public class UsuarioBean {
 			Perfil perfilAdministrador = new Perfil();
 			perfilAdministrador.setPerfil(BillsConstants.ADMIN);
 			usuario.setPerfil(perfilAdministrador);
-		} else if (perfis.size() == 1) {
+		} else {
 			Perfil perfilUsuario = new Perfil();
 			perfilUsuario.setPerfil(BillsConstants.USER);
 			usuario.setPerfil(perfilUsuario);
-		} else {
-			usuario.setPerfil(perfis.get(1));
 		}
 		usuario.setUltimoLogin(new Date());
 		usuarioDao.salva(usuario);

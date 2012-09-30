@@ -17,8 +17,9 @@ public class Utils {
 	}
 
 	public static Double precision(Double d) {
+		Locale.setDefault(new Locale("pt", "BR"));
 		DecimalFormat twoDForm = new DecimalFormat("0.00");
-		return Double.valueOf(twoDForm.format(d));
+		return Double.valueOf(twoDForm.format(d).replace(",", "."));
 	}
 
 	public static String formatarReal(Double valor) {

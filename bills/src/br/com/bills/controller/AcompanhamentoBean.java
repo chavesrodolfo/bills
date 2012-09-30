@@ -144,7 +144,7 @@ public class AcompanhamentoBean {
 		ChartSeries despesas = new ChartSeries();
 		despesas.setLabel("Despesa");
 		verificaMesAno();
-		for (int i = 1; i <= Utils.getMesAtual(); i++) {
+		for (int i = 0; i <= Utils.getMesAtual(); i++) {
 			double somaMovimentacao = movimentacaoFinanceira.somarMovimentacaoMes(i,
 					Integer.parseInt(anoSelecionado.toString()), usuarioWeb.getUsuario());
 			// if (somaMovimentacao > 0) {

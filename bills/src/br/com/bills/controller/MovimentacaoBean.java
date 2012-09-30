@@ -79,8 +79,8 @@ public class MovimentacaoBean {
 		for (Movimentacao mov : movimentacoes) {
 			DefaultScheduleEvent novoEvento = new DefaultScheduleEvent();
 			novoEvento.setTitle(mov.getDescricao());
-			novoEvento.setStartDate(mov.getData());
-			novoEvento.setEndDate(mov.getData());
+			novoEvento.setStartDate(lastDay(mov.getData()));
+			novoEvento.setEndDate(lastDay(mov.getData()));
 			novoEvento.setAllDay(true);
 			novoEvento.setData(mov.getId());
 			novoEvento.setEditable(false);
